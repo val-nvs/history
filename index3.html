@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>favorites</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		button {
+			all: unset;
+			cursor: crosshair;
+		}
+		body {
+			background: #000;
+			color: #fff;
+		}
+		.grid {
+			background: #111;
+			display: grid;
+			width: 1000px;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: repeat(6, 1fr);
+		}
+		.poster {
+			background: #222;
+			margin: 1rem;
+		}
+		video {
+			width:100%;
+		}
+		.hero video, .hero img, .hero h1 {
+			position: fixed;
+			top: 0;
+			left:0;
+			width: 100vw;
+			height: 100dvh;
+			object-fit: cover;
+			text-align: center;
+			opacity: .5;
+		}
+		.hero h1 {
+			top: 50%;
+		}
+	</style>
+</head>
+<body>
+	<div class="grid">
+		<button class="poster" onclick="">
+			<video muted autoplay loop src="everything-poster.mp4"></video>
+		</button>
+		<button class="poster" onclick="">
+			<video muted autoplay loop src="love-poster.mp4"></video>
+		</button>
+		<button class="poster">c</button>
+		<button class="poster">d</button>
+	</div>
+	<div class="hero" id="everything">
+		<img src="everything-hero.jpg"></img>
+		<video muted src="everything-hero.mp4"></video>
+		asdf
+	</div>
+	<div class="hero">
+		<img src="love-hero.jpg"></img>
+		<video muted src="love-hero.mp4"></video>
+		<h1>title</h1>
+	</div>
+</body>
+</html>

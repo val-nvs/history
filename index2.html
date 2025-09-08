@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Things</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .file-input-container {
+            position: relative;
+        }
+
+        .file-input {
+            background: #333;
+            border: 2px dashed #555;
+            border-radius: 10px;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            color: #fff;
+            font-weight: 500;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .file-input:hover {
+            border-color: #ff6b6b;
+            background: #444;
+            transform: translateY(-2px);
+        }
+
+        .file-input input {
+            display: none;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+            border: 1px solid #4ecdc4;
+        }
+
+        .status.error {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+
+        .container {
+            perspective: 1500px;
+            padding: 50px 20px;
+            min-height: 60vh;
+        }
+
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .poster-card {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .poster-card:active {
+            cursor: grabbing;
+        }
+
+        .poster-card:hover {
+            transform: scale(1.05) rotateY(10deg) rotateX(5deg);
+            z-index: 10;
+        }
+
+        .poster-card.sortable-ghost {
+            opacity: 0.3;
+        }
+
+        .poster-card.sortable-drag {
+            transform: rotate(5deg);
+            z-index: 50;
+        }
+
+        .poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(255, 107, 107, 0.1);
+            transition: all 0.6s ease;
+            transform-origin: center center;
+        }
+
+        .poster-card:nth-child(odd) .poster {
+            transform: rotateY(15deg) rotateX(5deg) rotateZ(2deg);
+        }
+
+        .poster-card:nth-child(even) .poster {
+            transform: rotateY(-12deg) rotateX(-3deg) rotateZ(-1deg);
+        }
+
+        .poster-card:nth-child(3n) .poster {
+            transform: rotateY(8deg) rotateX(-6deg) rotateZ(3deg);
+        }
+
+        .poster-card:nth-child(4n) .poster {
+            transform: rotateY(-18deg) rotateX(4deg) rotateZ(-2deg);
+        }
+
+        .poster-card:nth-child(5n) .poster {
+            transform: rotateY(20deg) rotateX(-8deg) rotateZ(1deg);
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: #ff6b6b;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .poster-card:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #888;
+            font-size: 1.1rem;
+            margin: 40px auto;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .drop-zone {
+            border: 3px dashed #555;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            color: #888;
+            font-size: 1.2rem;
+            margin: 40px auto;
+            max-width: 600px;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.dragover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .poster-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 40px;
+            }
+            
+            .poster-card {
+                width: 150px;
+                height: 225px;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">My Favorite Things</h1>
+        <div class="controls">
+            <label class="file-input">
+                <input type="file" id="imageInput" multiple accept="image/*">
+                📁 Upload Posters
+            </label>
+            <label class="file-input">
+                <input type="file" id="zipInput" accept=".zip">
+                📦 Load Collection
+            </label>
+            <button id="saveBtn" class="action-btn save-btn" disabled>💾 Save Collection</button>
+            <button id="clearBtn" class="action-btn clear-btn">🗑️ Clear All</button>
+        </div>
+        <div id="status" class="status"></div>
+    </div>
+
+    <div class="container">
+        <div id="dropZone" class="drop-zone">
+            <div>📂 Drag & drop images or zip files here</div>
+            <div style="margin-top: 15px; font-size: 1rem; opacity: 0.7;">
+                Upload individual posters or load a saved collection!
+            </div>
+        </div>
+        
+        <div class="poster-grid" id="posterGrid">
+            <!-- Posters will be loaded here -->
+        </div>
+        
+        <div class="instructions" id="instructions">
+            Upload your favorite movie posters, reorder them by dragging, then save your collection as a zip file. 
+            You can also load previously saved collections to continue editing where you left off!
+        </div>
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const zipInput = document.getElementById('zipInput');
+        const posterGrid = document.getElementById('posterGrid');
+        const saveBtn = document.getElementById('saveBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const dropZone = document.getElementById('dropZone');
+        const instructions = document.getElementById('instructions');
+
+        let uploadedFiles = [];
+        let sortable;
+
+        // Initialize drag and drop for reordering
+        function initSortable() {
+            if (sortable) {
+                sortable.destroy();
+            }
+            
+            sortable = Sortable.create(posterGrid, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                onUpdate: function(evt) {
+                    // Update the uploadedFiles array to match new order
+                    const newOrder = Array.from(posterGrid.children).map(card => {
+                        return parseInt(card.dataset.index);
+                    });
+                    
+                    const reorderedFiles = newOrder.map(index => uploadedFiles[index]);
+                    uploadedFiles = reorderedFiles;
+                    
+                    // Update data-index attributes
+                    Array.from(posterGrid.children).forEach((card, index) => {
+                        card.dataset.index = index;
+                    });
+                    
+                    showStatus('Posters reordered! 🎬', 'success');
+                }
+            });
+        }
+
+        // File input handler
+        imageInput.addEventListener('change', function(e) {
+            handleFiles(Array.from(e.target.files));
+        });
+
+        // Zip input handler
+        zipInput.addEventListener('change', function(e) {
+            const zipFile = e.target.files[0];
+            if (zipFile) {
+                loadZipCollection(zipFile);
+            }
+        });
+
+        // Load collection from zip file
+        async function loadZipCollection(zipFile) {
+            try {
+                showStatus('Loading collection... 📦', 'success');
+                
+                const zip = new JSZip();
+                const zipContent = await zip.loadAsync(zipFile);
+                
+                // Clear existing collection
+                uploadedFiles = [];
+                posterGrid.innerHTML = '';
+                
+                // Extract image files and their order
+                const imageFiles = [];
+                let orderInfo = null;
+                
+                // Check for order file
+                const orderFile = zipContent.file('_ORDER.txt');
+                if (orderFile) {
+                    orderInfo = await orderFile.async('string');
+                }
+                
+                // Process all files in the zip
+                for (const [filename, file] of Object.entries(zipContent.files)) {
+                    if (!file.dir && filename.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i)) {
+                        const blob = await file.async('blob');
+                        const dataUrl = await blobToDataUrl(blob);
+                        
+                        // Extract order number from filename (e.g., "001_poster.jpg" -> 1)
+                        const orderMatch = filename.match(/^(\d+)_/);
+                        const order = orderMatch ? parseInt(orderMatch[1]) : 999;
+                        
+                        imageFiles.push({
+                            filename: filename,
+                            originalName: filename.replace(/^\d+_/, ''), // Remove number prefix
+                            dataUrl: dataUrl,
+                            order: order,
+                            blob: blob
+                        });
+                    }
+                }
+                
+                if (imageFiles.length === 0) {
+                    showStatus('No images found in zip file! 😕', 'error');
+                    return;
+                }
+                
+                // Sort by order number
+                imageFiles.sort((a, b) => a.order - b.order);
+                
+                // Create file objects and load posters
+                imageFiles.forEach((imageFile, index) => {
+                    // Create a File object from the blob
+                    const file = new File([imageFile.blob], imageFile.originalName, { type: imageFile.blob.type });
+                    
+                    uploadedFiles.push({
+                        file: file,
+                        dataUrl: imageFile.dataUrl,
+                        name: imageFile.originalName
+                    });
+                    
+                    createPosterCard(imageFile.dataUrl, imageFile.originalName, index);
+                });
+                
+                // Update UI
+                if (uploadedFiles.length > 0) {
+                    dropZone.style.display = 'none';
+                    saveBtn.disabled = false;
+                    initSortable();
+                }
+                
+                showStatus(`Collection loaded! Found ${imageFiles.length} posters 🎉`, 'success');
+                
+                // Clear the file input
+                zipInput.value = '';
+                
+            } catch (error) {
+                showStatus('Error loading zip file. Please check the file format.', 'error');
+                console.error('Zip loading error:', error);
+                zipInput.value = '';
+            }
+        }
+        
+        // Helper function to convert blob to data URL
+        function blobToDataUrl(blob) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        // Drag and drop handlers
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            
+            // Check if there's a zip file
+            const zipFile = files.find(file => file.name.endsWith('.zip'));
+            if (zipFile) {
+                loadZipCollection(zipFile);
+                return;
+            }
+            
+            // Otherwise handle as regular image files
+            const imageFiles = files.filter(file => file.type.startsWith('image/'));
+            handleFiles(imageFiles);
+        });
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedFiles.push({
+                        file: file,
+                        dataUrl: e.target.result,
+                        name: file.name
+                    });
+                    
+                    createPosterCard(e.target.result, file.name, uploadedFiles.length - 1);
+                    
+                    // Hide drop zone and show save button when files are loaded
+                    if (uploadedFiles.length > 0) {
+                        dropZone.style.display = 'none';
+                        saveBtn.disabled = false;
+                        initSortable();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            showStatus(`Added ${files.length} poster(s)! 🎉`, 'success');
+        }
+
+        function createPosterCard(src, filename, index) {
+            const posterCard = document.createElement('div');
+            posterCard.className = 'poster-card';
+            posterCard.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'poster';
+            img.alt = filename;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.addEventListener('click', () => removePoster(index, posterCard));
+            
+            posterCard.appendChild(img);
+            posterCard.appendChild(removeBtn);
+            posterGrid.appendChild(posterCard);
+            
+            // Add pivoting animation
+            addPivotAnimation(posterCard);
+        }
+
+        function removePoster(index, cardElement) {
+            uploadedFiles.splice(index, 1);
+            cardElement.remove();
+            
+            // Update indices
+            Array.from(posterGrid.children).forEach((card, i) => {
+                card.dataset.index = i;
+                card.querySelector('.remove-btn').onclick = () => removePoster(i, card);
+            });
+            
+            if (uploadedFiles.length === 0) {
+                dropZone.style.display = 'block';
+                saveBtn.disabled = true;
+                if (sortable) sortable.destroy();
+            }
+            
+            showStatus('Poster removed! 🗑️', 'success');
+        }
+
+        function addPivotAnimation(posterCard) {
+            const animations = ['pivotX', 'pivotY', 'pivotZ', 'pivotMixed'];
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+            const randomDelay = Math.random() * 3;
+            const randomDuration = 8 + Math.random() * 4;
+            
+            posterCard.style.animation = `${randomAnimation} ${randomDuration}s ease-in-out ${randomDelay}s infinite alternate`;
+        }
+
+        // Clear all posters
+        clearBtn.addEventListener('click', function() {
+            if (uploadedFiles.length === 0) return;
+            
+            if (confirm('Are you sure you want to clear all posters?')) {
+                uploadedFiles = [];
+                posterGrid.innerHTML = '';
+                dropZone.style.display = 'block';
+                saveBtn.disabled = true;
+                if (sortable) sortable.destroy();
+                showStatus('All posters cleared! 🧹', 'success');
+            }
+        });
+
+        // Save collection as zip
+        saveBtn.addEventListener('click', async function() {
+            if (uploadedFiles.length === 0) return;
+            
+            saveBtn.disabled = true;
+            showStatus('Creating your collection... 📦', 'success');
+            
+            try {
+                const zip = new JSZip();
+                
+                // Add images in current order with numbered names
+                uploadedFiles.forEach((fileData, index) => {
+                    const extension = fileData.name.split('.').pop();
+                    const numberedName = `${(index + 1).toString().padStart(3, '0')}_${fileData.name}`;
+                    
+                    // Convert data URL to blob
+                    const base64 = fileData.dataUrl.split(',')[1];
+                    zip.file(numberedName, base64, { base64: true });
+                });
+                
+                // Add order information
+                const orderInfo = uploadedFiles.map((fileData, index) => 
+                    `${index + 1}. ${fileData.name}`
+                ).join('\n');
+                
+                zip.file('_ORDER.txt', `My Favorite Things - Collection Order:\n\n${orderInfo}\n\nGenerated on: ${new Date().toLocaleString()}`);
+                
+                // Generate and download zip
+                const blob = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `my-favorite-things-${new Date().toISOString().split('T')[0]}.zip`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showStatus('Collection saved successfully! 🎉', 'success');
+            } catch (error) {
+                showStatus('Error creating zip file. Please try again.', 'error');
+                console.error('Zip creation error:', error);
+            } finally {
+                saveBtn.disabled = false;
+            }
+        });
+
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pivotX {
+                0% { transform: rotateX(0deg); }
+                100% { transform: rotateX(15deg); }
+            }
+            
+            @keyframes pivotY {
+                0% { transform: rotateY(0deg); }
+                100% { transform: rotateY(20deg); }
+            }
+            
+            @keyframes pivotZ {
+                0% { transform: rotateZ(0deg); }
+                100% { transform: rotateZ(8deg); }
+            }
+            
+            @keyframes pivotMixed {
+                0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+                50% { transform: rotateX(10deg) rotateY(-15deg) rotateZ(5deg); }
+                100% { transform: rotateX(-5deg) rotateY(12deg) rotateZ(-3deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
