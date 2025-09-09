@@ -17,6 +17,17 @@
 			background: #000;
 			color: #fff;
 		}
+
+		@font-face {
+			font-family: 'everything';
+			src: url('everything.woff2') format('woff2');
+		}
+		@font-face {
+			font-family: 'amelie';
+			src: url('amelie.otf') format('truetype');
+		}
+
+
 		.grid {
 			background: #111;
 			display: grid;
@@ -42,11 +53,23 @@
 			text-align: center;
 		}
 		.hero h1 {
-			top: 50%;
+			top: 0%;
+			max-width: 99vw;
+			font-size: 14rem;
+			white-space: normal;
+			word-wrap: break-word;
+			text-align: center;
 		}
 		.hero.active video, .hero.active img, .hero.active h1 {
 			visibility: visible;
 		}
+
+		#everything {font-family: everything, Arial, sans-serif;}
+		#amelie {font-family: amelie, Arial, sans-serif;}
+
+		.letter {opacity: 0}
+		.letter.show {opacity: 1}
+
 	</style>
 </head>
 <body>
@@ -54,25 +77,67 @@
 		<button class="poster" onclick="openHero('everything')">
 			<video muted autoplay loop src="everything-poster.mp4"></video>
 		</button>
+		<button class="poster" onclick="openHero('amelie')">
+			<video muted autoplay loop src="amelie-poster.mp4"></video>
+		</button>
 		<button class="poster" onclick="openHero('love')">
 			<video muted autoplay loop src="love-poster.mp4"></video>
 		</button>
-		<button class="poster">c</button>
-		<button class="poster">d</button>
+		<button class="poster">D</button>
+		<button class="poster">E</button>
+		<button class="poster">F</button>
 	</div>
-	<div class="hero" id="everything">
+	<div class="hero" id="everything" onclick="closeHero()">
 		<img src="everything-hero.jpg"></img>
 		<video muted src="everything-hero.mp4"></video>
-		asdf
+		<h1>Everything Everywhere All At Once (2022) Dir.: The Daniels</h1>
 	</div>
-	<div class="hero" id="love">
+	<div class="hero" id="amelie" onclick="closeHero()">
+		<img src="amelie-hero.jpg"></img>
+		<video muted src="amelie-hero.mp4"></video>
+		<h1>Le Fabuleux Destin d'Amélie Poulain (2001) Dir.: Jean-Pierre Jeunet</h1>
+	</div>
+	<div class="hero" id="love" onclick="closeHero()">
 		<img src="love-hero.jpg"></img>
 		<video muted src="love-hero.mp4"></video>
-		<h1>title</h1>
+		<h1>Love Exposure (2008) Dir.: Sion Sono</h1>
 	</div>
 
 <script>
-	function openHero(heroId){
+
+	function splitLetters(h1) {
+		const text = h1.textContent;
+		h1.innerHTML = '';
+		for (let char of text) {
+			const span = document.createElement('span');
+			span.className = 'letter';
+			span.textContent = char === ' ' ? '\u00a0' : char;
+			h1.appendChild(span);
+		}
+
+	}
+
+	function showLettersRandomly(h1) {
+    const letters = h1.querySelectorAll('.letter');
+    const indices = [...Array(letters.length).keys()];
+    
+    // Shuffle array
+    for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    
+    // Show letters randomly
+    indices.forEach((index, i) => {
+        setTimeout(() => {
+            letters[index].classList.add('show');
+        }, i * 42);
+    });
+
+	}
+
+
+	function openHero(heroId) {
 
 		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
 
@@ -80,7 +145,17 @@
 		hero.classList.add('active');
 		hero.querySelector('video').play();
 
-			}
+		const h1 = hero.querySelector('h1');
+		splitLetters(h1);
+		setTimeout(() => showLettersRandomly(h1), 500);
+	}
+
+	function closeHero() {
+		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
+		document.querySelectorAll('.hero video').forEach(video => video.pause());
+	}
+
+
 </script>
 </body>
 </html>
