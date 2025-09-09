@@ -36,11 +36,18 @@
 			grid-template-rows: repeat(6, 1fr);
 		}
 		.poster {
-			background: #222;
+			background: rgba(0, 0, 0, .2);
 			margin: 1rem;
+			border-radius: 1rem;
+			overflow: hidden;
+			display: block;
+			aspect-ratio: 2/3;
 		}
-		video {
+		.poster video, .poster img {
 			width:100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
 		}
 		.hero video, .hero img, .hero h1 {
 			visibility: hidden;
@@ -89,13 +96,16 @@
 <body>
 	<div class="grid">
 		<button class="poster" onclick="openHero('everything')">
+			<img src="everything-poster.jpg"/>
 			<video muted autoplay loop src="everything-poster.mp4"></video>
 		</button>
 		<button class="poster" onclick="openHero('amelie')">
+			<img src="amelie-poster.jpg"/>
 			<video muted autoplay loop src="amelie-poster.mp4"></video>
 		</button>
 		<button class="poster" onclick="openHero('love')">
 			<video muted autoplay loop src="love-poster.mp4"></video>
+			<img src="love-poster.jpg"/>
 		</button>
 		<button class="poster">D</button>
 		<button class="poster">E</button>
@@ -117,7 +127,7 @@
 		<h1>Love Exposure / Sion Sono</h1>
 	</div>
 
-	<div id="asdf">hi</div>
+	<!--<div id="asdf">hi</div>-->
 
 <script>
 
