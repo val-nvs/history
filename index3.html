@@ -54,8 +54,10 @@
 		}
 		.hero h1 {
 			top: 0%;
-			max-width: 99vw;
-			font-size: 14rem;
+			left: 50%;
+			transform: translateX(-50%);
+			max-width: calc(100dvh * 9/16);
+			font-size: calc(15dvh * 9/16);
 			white-space: normal;
 			word-wrap: break-word;
 			text-align: center;
@@ -69,6 +71,18 @@
 
 		.letter {opacity: 0}
 		.letter.show {opacity: 1}
+
+		#asdf {
+			background-color: #f0f;
+			opacity: .1;
+			aspect-ratio: 9/16;
+			height: 100dvh;
+			position: fixed;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			object-fit: center;
+		}
 
 	</style>
 </head>
@@ -90,18 +104,20 @@
 	<div class="hero" id="everything" onclick="closeHero()">
 		<img src="everything-hero.jpg"></img>
 		<video muted src="everything-hero.mp4"></video>
-		<h1>Everything Everywhere All At Once (2022) Dir.: The Daniels</h1>
+		<h1>Everything Everywhere All At Once / The Daniels</h1>
 	</div>
 	<div class="hero" id="amelie" onclick="closeHero()">
 		<img src="amelie-hero.jpg"></img>
 		<video muted src="amelie-hero.mp4"></video>
-		<h1>Le Fabuleux Destin d'Amélie Poulain (2001) Dir.: Jean-Pierre Jeunet</h1>
+		<h1>Le Fabuleux Destin d'Amélie Poulain / Jean-Pierre Jeunet</h1>
 	</div>
 	<div class="hero" id="love" onclick="closeHero()">
 		<img src="love-hero.jpg"></img>
 		<video muted src="love-hero.mp4"></video>
-		<h1>Love Exposure (2008) Dir.: Sion Sono</h1>
+		<h1>Love Exposure / Sion Sono</h1>
 	</div>
+
+	<div id="asdf">hi</div>
 
 <script>
 
@@ -111,7 +127,7 @@
 		for (let char of text) {
 			const span = document.createElement('span');
 			span.className = 'letter';
-			span.textContent = char === ' ' ? '\u00a0' : char;
+			span.textContent = char;
 			h1.appendChild(span);
 		}
 
