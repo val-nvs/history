@@ -14,34 +14,55 @@
 			cursor: crosshair;
 		}
 		body {
-			background: #000;
+			background: #14181C;
 			color: #fff;
 		}
+		
+		header {
+			background: #14181C;
+			height: 90px;
+			width: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+		}
+		
+		.hero.active ~ header,
+		body:has(.hero.active) header {
+			opacity: 0;
+			pointer-events: none;
+		}
+		
+		main {
+			background: #14181C url('grain-bg.png') repeat-x;
+			margin-top: 90px;
+			min-height: calc(100vh - 72px);
+		}
 
-		@font-face {
-			font-family: 'everything';
-			src: url('everything.woff2') format('woff2');
-		}
-		@font-face {
-			font-family: 'amelie';
-			src: url('amelie.otf') format('truetype');
-		}
+		@font-face {font-family: 'everything'; src: url('everything.woff2') format('woff2');}
+		@font-face {font-family: 'amelie'; src: url('amelie.otf') format('truetype');}
+		@font-face {font-family: 'lily'; src: url('lily.woff2') format('woff2');}
+		@font-face {font-family: 'humanist'; src: url('humanist.ttf') format('truetype');}
 
 
 		.grid {
-			background: #111;
+			background: rgba(0, 0, 0, 0);
 			display: grid;
 			width: 1000px;
 			grid-template-columns: repeat(3, 1fr);
 			grid-template-rows: repeat(6, 1fr);
+			margin: 0 auto;
+			padding: 2rem 0;
 		}
 		.poster {
 			background: rgba(0, 0, 0, .2);
 			margin: 1rem;
-			border-radius: 1rem;
+			border-radius: 0.5rem;
 			overflow: hidden;
 			display: block;
 			aspect-ratio: 2/3;
+			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 		}
 		.poster video, .poster img {
 			width:100%;
@@ -60,9 +81,9 @@
 			text-align: center;
 		}
 		.hero h1 {
-			top: 0%;
+			top: 50%;
 			left: 50%;
-			transform: translateX(-50%);
+			transform: translate(-50%, -40%);
 			max-width: calc(100dvh * 9/16);
 			font-size: calc(15dvh * 9/16);
 			white-space: normal;
@@ -75,6 +96,8 @@
 
 		#everything {font-family: everything, Arial, sans-serif;}
 		#amelie {font-family: amelie, Arial, sans-serif;}
+		#lily {font-family: lily, Arial, sans-serif;}
+		#humanist {font-family: humanist, Arial, sans-serif;}
 
 		.letter {opacity: 0}
 		.letter.show {opacity: 1}
@@ -94,37 +117,56 @@
 	</style>
 </head>
 <body>
-	<div class="grid">
-		<button class="poster" onclick="openHero('everything')">
-			<img src="everything-poster.jpg"/>
-			<video muted autoplay loop src="everything-poster.mp4"></video>
-		</button>
-		<button class="poster" onclick="openHero('amelie')">
-			<img src="amelie-poster.jpg"/>
-			<video muted autoplay loop src="amelie-poster.mp4"></video>
-		</button>
-		<button class="poster" onclick="openHero('love')">
-			<video muted autoplay loop src="love-poster.mp4"></video>
-			<img src="love-poster.jpg"/>
-		</button>
-		<button class="poster">D</button>
-		<button class="poster">E</button>
-		<button class="poster">F</button>
-	</div>
+	<header></header>
+	<main>
+		<div class="grid">
+			<button class="poster" onclick="openHero('everything')">
+				<img src="everything-poster.jpg"/>
+				<video muted autoplay loop src="everything-poster.mp4"></video>
+			</button>
+			<button class="poster" onclick="openHero('amelie')">
+				<img src="amelie-poster.jpg"/>
+				<video muted autoplay loop src="amelie-poster.mp4"></video>
+			</button>
+			<button class="poster" onclick="openHero('love')">
+				<video muted autoplay loop src="love-poster.mp4"></video>
+				<img src="love-poster.jpg"/>
+			</button>
+			<button class="poster" onclick="openHero('lily')">
+				<img src="lily-poster.jpg"/>
+				<video muted autoplay loop src="lily-poster.mp4"></video>
+			</button>
+			<button class="poster" onclick="openHero('humanist')">
+				<img src="humanist-poster.jpg"/>
+				<video muted autoplay loop src="humanist-poster.mp4"></video>
+			</button>
+		</div>
+	</main>
+
 	<div class="hero" id="everything" onclick="closeHero()">
 		<img src="everything-hero.jpg"></img>
 		<video muted src="everything-hero.mp4"></video>
-		<h1>Everything Everywhere All At Once / The Daniels</h1>
+		<h1>Everything Everywhere All At Once * The Daniels</h1>
 	</div>
 	<div class="hero" id="amelie" onclick="closeHero()">
 		<img src="amelie-hero.jpg"></img>
 		<video muted src="amelie-hero.mp4"></video>
-		<h1>Le Fabuleux Destin d'Amélie Poulain / Jean-Pierre Jeunet</h1>
+		<h1>Le Fabuleux Destin d'Amélie Poulain * Jean-Pierre Jeunet</h1>
 	</div>
 	<div class="hero" id="love" onclick="closeHero()">
 		<img src="love-hero.jpg"></img>
 		<video muted src="love-hero.mp4"></video>
-		<h1>Love Exposure / Sion Sono</h1>
+		<h1>Love Exposure * Sion Sono</h1>
+	</div>
+	<div class="hero" id="lily" onclick="closeHero()">
+		<img src="lily-hero.jpg"></img>
+		<video muted src="lily-hero.mp4"></video>
+		<h1>All About Lily Chou-Chou リリイ・シュシュのすべて * Shunji Iwai</h1>
+	</div>
+	<div class="hero" id="humanist" onclick="closeHero()">
+		<img src="humanist-hero.jpg"></img>
+		<video muted src="humanist-hero.mp4"></video>
+		<h1>Vampire humaniste cherche suicidaire consentant * Ariane Louis-Seize</h1>
 	</div>
 
 	<!--<div id="asdf">hi</div>-->
