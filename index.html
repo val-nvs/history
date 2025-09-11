@@ -181,13 +181,14 @@
 		}
 		
 		.score-pill {
-			background: rgba(255, 255, 255, 0.1);
-			border-radius: 1rem;
-			padding: 0.3rem 0.8rem;
-			font-size: 0.5em;
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid rgba(255, 255, 255, 1);
+			border-radius: 2rem;
+			padding: 0.4rem 2rem;
+			font-size: 0.14em;
 			position: relative;
 			overflow: hidden;
-			min-width: 4rem;
+			min-width: 3rem;
 			text-align: center;
 		}
 		
@@ -196,8 +197,8 @@
 			top: 0;
 			left: 0;
 			height: 100%;
-			background: rgba(255, 255, 255, 0.3);
-			border-radius: 1rem;
+			background: rgba(180, 180, 180, 1);
+			border-radius: 2rem;
 			transition: width 0.6s ease;
 		}
 		
@@ -207,14 +208,16 @@
 			font-weight: bold;
 			text-transform: uppercase;
 			letter-spacing: 0.05em;
+			mix-blend-mode: exclusion;
+
 		}
 		
 		.poster-score {
 			position: absolute;
 			bottom: 0.5rem;
 			right: 0.5rem;
-			width: 2.5rem;
-			height: 2.5rem;
+			width: 1.8rem;
+			height: 1.8rem;
 			background: rgba(0, 0, 0, 0.8);
 			border: 1px solid rgba(255, 255, 255, 0.3);
 			border-radius: 50%;
@@ -223,7 +226,6 @@
 			justify-content: center;
 			font-size: 0.7rem;
 			font-weight: bold;
-			transform: rotate(-45deg);
 			z-index: 10;
 		}
 	</style>
@@ -232,9 +234,10 @@
 	<header>
 		<nav>
 			<ul>
-				<li>FAVORITE FILMS</li>
-				<li>ABOUT</li>
-				<button>HOME</button>
+				<li>MY</li>
+				<li>FAVORITE</li>
+				<li>FILMS</li>
+				<button onclick="window.location.href='https://letterboxd.com/eerom/'">PROFILE</button>
 			</ul>
 		</nav>
 	</header>
@@ -282,8 +285,8 @@
 			}
 			
 			button.innerHTML = `
-				<img src="${movie.id}-poster.jpg" alt="${movie.title}"/>
-				<video muted autoplay loop src="${movie.id}-poster.mp4"></video>
+				<img src="${movie.id}-poster.jpg" alt="${movie.title}" onerror="this.src='fallback-poster.jpg'"/>
+				<video muted autoplay loop src="${movie.id}-poster.mp4" onerror="this.style.display='none'"></video>
 				${totalScore > 0 ? `<div class="poster-score">${totalScore}</div>` : ''}
 			`;
 			
@@ -308,7 +311,7 @@
 			
 			// Build title, subtitle, director, year, and scores
 			const titleColor = movie.titleColor || '#fff';
-			const altColor = movie.directorColor || '#000';
+			const altColor = movie.directorColor || '#b4b4b4';
 			
 			let titleHTML = `<span class="title-line" style="color: ${titleColor}">${movie.title}</span>`;
 			
@@ -379,7 +382,7 @@
 		indices.forEach((index, i) => {
 			setTimeout(() => {
 				letters[index].classList.add('show');
-			}, i * 42);
+			}, i * 40);
 		});
 	}
 
@@ -404,7 +407,7 @@
 
 		const h1 = hero.querySelector('h1');
 		splitLetters(h1);
-		setTimeout(() => showLettersRandomly(h1), 500);
+		setTimeout(() => showLettersRandomly(h1), 50);
 	}
 
 	function closeHero() {

@@ -65,6 +65,33 @@
 			}
 		},
 		{
+			"id": "angels",
+			"title": "Fallen Angels",
+			"subtitle": "墮落天使",
+			"director": "Wong Kar-wai",
+			"year": 1995,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "mitty",
+			"title": "The Secret Life of Walter Mitty",
+			"director": "Ben Stiller",
+			"year": 2013,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
+		},
+		{
 			"id": "humanist",
 			"title": "Humanist Vampire Seeking Consenting Suicidal Person",
 			"subtitle": "Vampire humaniste cherche suicidaire consentant",
@@ -90,24 +117,10 @@
 			"videoVariants": 2,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 4,
 				"story": 5,
 				"impact": 5,
 				"purpose": 4
-			}
-		},
-		{
-			"id": "angels",
-			"title": "Fallen Angels",
-			"subtitle": "墮落天使",
-			"director": "Wong Kar-wai",
-			"year": 1995,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 4,
-				"impact": 5,
-				"purpose": 3
 			}
 		},
 		{
@@ -124,19 +137,6 @@
 			}
 		},
 		{
-			"id": "mitty",
-			"title": "The Secret Life of Walter Mitty",
-			"director": "Ben Stiller",
-			"year": 2013,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
-				"purpose": 5
-			}
-		},
-		{
 			"id": "cyborg",
 			"title": "I'm a Cyborg, But That's OK",
 			"subtitle": "싸이보그지만 괜찮아",
@@ -144,7 +144,7 @@
 			"year": 2006,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 5,
 				"story": 4,
 				"impact": 5,
 				"purpose": 5
@@ -192,19 +192,6 @@
 			}
 		},
 		{
-			"id": "closer",
-			"title": "Closer",
-			"director": "Mike Nichols",
-			"year": 2004,
-			"scores": {
-				"visuals": 4,
-				"sound": null,
-				"story": 5,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
 			"id": "burning",
 			"title": "Burning",
 			"subtitle": "버닝",
@@ -212,7 +199,7 @@
 			"year": 2018,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 5,
 				"story": 5,
 				"impact": 5,
 				"purpose": 3
@@ -232,6 +219,46 @@
 			}
 		},
 		{
+			"id": "robot",
+			"title": "Mr. Robot",
+			"director": "Sam Esmail",
+			"year": 2015,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "suzhou",
+			"title": "Suzhou River",
+			"subtitle": "苏州河",
+			"director": "Lou Ye",
+			"year": 2000,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 1
+			}
+		},
+		{
+			"id": "closer",
+			"title": "Closer",
+			"director": "Mike Nichols",
+			"year": 2004,
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
 			"id": "manchester",
 			"title": "Manchester by the Sea",
 			"director": "Kenneth Lonergan",
@@ -239,6 +266,20 @@
 			"scores": {
 				"visuals": 4,
 				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "devilman",
+			"title": "Devilman Crybaby",
+			"subtitle": "デビルマン クライベイビー",
+			"director": "Masaaki Yuasa",
+			"year": 2018,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
 				"story": 5,
 				"impact": 5,
 				"purpose": 3
@@ -285,29 +326,16 @@
 			}
 		},
 		{
-			"id": "kickass",
-			"title": "Kick-Ass",
-			"director": "Matthew Vaughn",
-			"year": 2010,
-			"scores": {
-				"visuals": 3,
-				"sound": null,
-				"story": 4,
-				"impact": 4,
-				"purpose": 4
-			}
-		},
-		{
 			"id": "mulholland",
 			"title": "Mulholland Drive",
 			"director": "David Lynch",
 			"year": 2001,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 5,
 				"story": 5,
 				"impact": 5,
-				"purpose": 2
+				"purpose": 1
 			}
 		},
 		{
@@ -318,23 +346,75 @@
 			"year": 1979,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 3,
 				"story": 5,
 				"impact": 4,
 				"purpose": 3
 			}
 		},
 		{
-			"id": "perks",
-			"title": "The Perks of Being a Wallflower",
-			"director": "Stephen Chbosky",
-			"year": 2012,
+			"id": "fall",
+			"title": "The Fall",
+			"director": "Tarsem Singh",
+			"year": 2006,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "incredibles",
+			"title": "The Incredibles",
+			"director": "Brad Bird",
+			"year": 2004,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
+		},
+		{
+			"id": "twin",
+			"title": "Twin Peaks",
+			"director": "David Lynch",
+			"year": 1989,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
 				"story": 5,
 				"impact": 5,
 				"purpose": 3
+			}
+		},
+		{
+			"id": "hugo",
+			"title": "Hugo",
+			"director": "Martin Scorsese",
+			"year": 2011,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "walle",
+			"title": "WALL·E",
+			"director": "Andrew Stanton",
+			"year": 2008,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
 			}
 		},
 		{
@@ -359,23 +439,36 @@
 			"year": 2002,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 4,
 				"story": 5,
 				"impact": 4,
 				"purpose": 2
 			}
 		},
 		{
-			"id": "incredibles",
-			"title": "The Incredibles",
-			"director": "Brad Bird",
-			"year": 2004,
+			"id": "perks",
+			"title": "The Perks of Being a Wallflower",
+			"director": "Stephen Chbosky",
+			"year": 2012,
 			"scores": {
 				"visuals": 5,
-				"sound": 5,
+				"sound": 3,
 				"story": 5,
 				"impact": 5,
-				"purpose": 5
+				"purpose": 3
+			}
+		},
+		{
+			"id": "kickass",
+			"title": "Kick-Ass",
+			"director": "Matthew Vaughn",
+			"year": 2010,
+			"scores": {
+				"visuals": 3,
+				"sound": 3,
+				"story": 4,
+				"impact": 4,
+				"purpose": 4
 			}
 		},
 		{
@@ -385,7 +478,7 @@
 			"year": 2017,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 4,
 				"story": 4,
 				"impact": 4,
 				"purpose": 2
@@ -399,7 +492,7 @@
 			"year": 2004,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 4,
 				"story": 5,
 				"impact": 5,
 				"purpose": 2
@@ -411,75 +504,10 @@
 			"director": "James Mangold",
 			"year": 1999,
 			"scores": {
-				"visuals": null,
-				"sound": null,
+				"visuals": 4,
+				"sound": 4,
 				"story": 5,
 				"impact": 4,
-				"purpose": 3
-			}
-		},
-		{
-			"id": "walle",
-			"title": "WALL·E",
-			"director": "Andrew Stanton",
-			"year": 2008,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
-				"purpose": 5
-			}
-		},
-		{
-			"id": "hugo",
-			"title": "Hugo",
-			"director": "Martin Scorsese",
-			"year": 2011,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
-				"purpose": 4
-			}
-		},
-		{
-			"id": "fall",
-			"title": "The Fall",
-			"director": "Tarsem Singh",
-			"year": 2006,
-			"scores": {
-				"visuals": 5,
-				"sound": null,
-				"story": 5,
-				"impact": 5,
-				"purpose": 4
-			}
-		},
-		{
-			"id": "peaks",
-			"title": "Twin Peaks",
-			"director": "David Lynch",
-			"year": 1989,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
-			"id": "robot",
-			"title": "Mr. Robot",
-			"director": "Sam Esmail",
-			"year": 2015,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
 				"purpose": 3
 			}
 		},
@@ -490,24 +518,10 @@
 			"year": 2012,
 			"scores": {
 				"visuals": 5,
-				"sound": null,
+				"sound": 5,
 				"story": 4,
 				"impact": 4,
 				"purpose": 4
-			}
-		},
-		{
-			"id": "suzhou",
-			"title": "Suzhou River",
-			"subtitle": "苏州河",
-			"director": "Lou Ye",
-			"year": 2000,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 5,
-				"impact": 5,
-				"purpose": 1
 			}
 		}
 	]
