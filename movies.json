@@ -1,0 +1,69 @@
+// Variables: id, title, director, hasFont, titleColor, directorColor
+{
+  "movies": [
+    {
+      "id": "everything",
+      "title": "Everything Everywhere All At Once",
+      "director": "The Daniels",
+      "hasFont": true,
+      "directorColor": "#000000"
+    },
+    {
+      "id": "amelie", 
+      "title": "Le Fabuleux Destin d'Amélie Poulain",
+      "director": "Jean-Pierre Jeunet",
+      "hasFont": true,
+      "titleColor": "#FECE08"
+    },
+    {
+      "id": "love",
+      "title": "Love Exposure", 
+      "director": "Sion Sono"
+    },
+    {
+      "id": "lily",
+      "title": "All About Lily Chou-Chou リリイ・シュシュのすべて",
+      "director": "Shunji Iwai",
+      "hasFont": true
+    },
+    {
+      "id": "humanist",
+      "title": "Vampire humaniste cherche suicidaire consentant",
+      "director": "Ariane Louis-Seize", 
+      "hasFont": true,
+      "titleColor": "#DC7A93"
+    },
+    {
+      "id": "yiyi",
+      "title": "Yi Yi 一一",
+      "director": "Edward Yang"
+    },
+    {
+      "id": "angels",
+      "title": "Yi Yi 一一 ^ Fallen Angels 墮落天使",
+      "director": "Wong Kar-wai"
+    },
+    {
+      "id": "scott",
+      "title": "Scott Pilgrim vs. the World", 
+      "director": "Edgar Wright"
+    },
+    {
+      "id": "mitty",
+      "title": "The Secret Life of Walter Mitty",
+      "director": "Ben Stiller"
+    },
+    {
+      "id": "cyborg",
+      "title": "I'm a Cyborg, But That's OK 2006 싸이보그지만 괜찮아",
+      "director": "Park Chan-wook"
+    },
+    {
+      "id": "tron",
+      "title": "Tron: Legacy",
+      "director": "Joseph Kosinski",
+      "titleColor": "#0ff",
+      "directorColor": "#fff"
+    }
+  ]
+}

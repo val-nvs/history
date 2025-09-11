@@ -8,24 +8,46 @@
 		* {
 			margin: 0;
 			padding: 0;
+			box-sizing: border-box;
 		}
+		
 		button {
 			all: unset;
-			cursor: crosshair;
+			cursor: pointer;
 		}
+		
 		body {
 			background: #14181C;
 			color: #fff;
+			font-family: 'Graphik', Arial, sans-serif;
 		}
 		
 		header {
 			background: #14181C;
-			height: 90px;
+			height: 60px;
 			width: 100%;
 			position: fixed;
 			top: 0;
 			left: 0;
 			z-index: 1000;
+			display: flex;
+			justify-content: end;
+			align-items: center;
+			padding: 1rem;
+			letter-spacing: 0.1rem;
+		}
+		header nav ul {
+			color: #99AABB;
+			list-style: none;
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+		}
+		header nav ul button {
+			background-color: #00AC1C;
+			padding: 0.2rem 0.6rem;
+			color: #fff;
+			border-radius: .2rem;
 		}
 		
 		.hero.active ~ header,
@@ -36,190 +58,177 @@
 		
 		main {
 			background: #14181C url('grain-bg.png') repeat-x;
-			margin-top: 90px;
-			min-height: calc(100vh - 72px);
+			margin-top: 60px;
+			min-height: calc(100vh - 60px);
+			padding: 1rem;
 		}
 
+		@font-face {font-family: 'Graphik'; src: url('Graphik-Bold-Trial.otf') format('truetype');}
 		@font-face {font-family: 'everything'; src: url('everything.woff2') format('woff2');}
 		@font-face {font-family: 'amelie'; src: url('amelie.otf') format('truetype');}
 		@font-face {font-family: 'lily'; src: url('lily.woff2') format('woff2');}
 		@font-face {font-family: 'humanist'; src: url('humanist.ttf') format('truetype');}
 
-
+		/* SIMPLE ASPECT RATIO RESPONSIVE */
 		.grid {
-			background: rgba(0, 0, 0, 0);
 			display: grid;
-			width: calc(20rem * 4);
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-rows: repeat(6, 1fr);
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 1.5rem;
+			max-width: 1400px;
 			margin: 0 auto;
 			padding: 2rem 0;
 		}
+
+		/* Portrait/Square: 2 columns when taller than 1:1 */
+		@media (max-aspect-ratio: 1/1) {
+			.grid {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+		
 		.poster {
 			background: rgba(0, 0, 0, .2);
-			margin: 1rem;
-			border-radius: 0.5rem;
+			border-radius: 0.75rem;
 			overflow: hidden;
 			display: block;
 			aspect-ratio: 2/3;
-			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			transition: all 0.3s ease;
+			position: relative;
 		}
+		
+		.poster:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+			border-color: rgba(255, 255, 255, 0.2);
+		}
+		
 		.poster video, .poster img {
-			width:100%;
+			width: 100%;
 			height: 100%;
 			object-fit: cover;
 			display: block;
 		}
+		
 		.hero video, .hero img, .hero h1 {
 			visibility: hidden;
 			position: fixed;
 			top: 0;
-			left:0;
+			left: 0;
 			width: 100vw;
 			height: 100dvh;
 			object-fit: cover;
-			text-align: center;
+			z-index: 2000;
 		}
+		
 		.hero h1 {
 			top: 50%;
 			left: 50%;
-			transform: translate(-50%, -40%);
-			max-width: calc(100dvh * 9/16);
-			font-size: calc(15dvh * 9/16);
+			transform: translate(-50%, -50%);
+			max-width: 90vw;
+			font-size: clamp(1.5rem, 8vw, 6rem);
 			white-space: normal;
 			word-wrap: break-word;
 			text-align: center;
+			padding: 0 1rem;
+			line-height: 1.2;
 		}
+		
 		.hero.active video, .hero.active img, .hero.active h1 {
 			visibility: visible;
 		}
 
-		#everything {font-family: everything, Arial, sans-serif;}
-		#amelie {font-family: amelie, Arial, sans-serif;}
-		#lily {font-family: lily, Arial, sans-serif;}
-		#humanist {font-family: humanist, Arial, sans-serif;}
+		#everything {font-family: everything, 'Graphik', Arial, sans-serif;}
+		#amelie {font-family: amelie, 'Graphik', Arial, sans-serif;}
+		#lily {font-family: lily, 'Graphik', Arial, sans-serif;}
+		#humanist {font-family: humanist, 'Graphik', Arial, sans-serif;}
 
-		.letter {opacity: 0}
-		.letter.show {opacity: 1}
-
-		#asdf {
-			background-color: #f0f;
-			opacity: .1;
-			aspect-ratio: 9/16;
-			height: 100dvh;
-			position: fixed;
-			top: 0;
-			left: 50%;
-			transform: translateX(-50%);
-			object-fit: center;
+		.letter {
+			opacity: 0;
+			transition: opacity 0.3s ease;
 		}
-
+		.letter.show {opacity: 1}
 	</style>
 </head>
 <body>
-	<header></header>
+	<header>
+		<nav>
+			<ul>
+				<li>FAVORITE FILMS</li>
+				<li>ABOUT</li>
+				<button>HOME</button>
+			</ul>
+		</nav>
+	</header>
 	<main>
-		<div class="grid">
-			<button class="poster" onclick="openHero('everything')">
-				<img src="everything-poster.jpg"/>
-				<video muted autoplay loop src="everything-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('amelie')">
-				<img src="amelie-poster.jpg"/>
-				<video muted autoplay loop src="amelie-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('love')">
-				<video muted autoplay loop src="love-poster.mp4"></video>
-				<img src="love-poster.jpg"/>
-			</button>
-			<button class="poster" onclick="openHero('lily')">
-				<img src="lily-poster.jpg"/>
-				<video muted autoplay loop src="lily-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('humanist')">
-				<img src="humanist-poster.jpg"/>
-				<video muted autoplay loop src="humanist-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('yiyi')">
-				<img src="yiyi-poster.jpg"/>
-				<video muted autoplay loop src="yiyi-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('angels')">
-				<img src="angels-poster.jpg"/>
-				<video muted autoplay loop src="angels-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('scott')">
-				<img src="scott-poster.jpg"/>
-				<video muted autoplay loop src="scott-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('mitty')">
-				<img src="mitty-poster.jpg"/>
-				<video muted autoplay loop src="mitty-poster.mp4"></video>
-			</button>
-			<button class="poster" onclick="openHero('cyborg')">
-				<img src="cyborg-poster.jpg"/>
-				<video muted autoplay loop src="cyborg-poster.mp4"></video>
-			</button>
+		<div class="grid" id="movieGrid">
+			<!-- Movies will be loaded here -->
 		</div>
 	</main>
 
-	<div class="hero" id="everything" onclick="closeHero()">
-		<img src="everything-hero.jpg"></img>
-		<video muted src="everything-hero.mp4"></video>
-		<h1>Everything Everywhere All At Once * The Daniels</h1>
+	<div id="heroContainer">
+		<!-- Hero sections will be loaded here -->
 	</div>
-	<div class="hero" id="amelie" onclick="closeHero()">
-		<img src="amelie-hero.jpg"></img>
-		<video muted src="amelie-hero.mp4"></video>
-		<h1>Le Fabuleux Destin d'Amélie Poulain * Jean-Pierre Jeunet</h1>
-	</div>
-	<div class="hero" id="love" onclick="closeHero()">
-		<img src="love-hero.jpg"></img>
-		<video muted src="love-hero.mp4"></video>
-		<h1>Love Exposure * Sion Sono</h1>
-	</div>
-	<div class="hero" id="lily" onclick="closeHero()">
-		<img src="lily-hero.jpg"></img>
-		<video muted src="lily-hero.mp4"></video>
-		<h1>All About Lily Chou-Chou リリイ・シュシュのすべて * Shunji Iwai</h1>
-	</div>
-	<div class="hero" id="humanist" onclick="closeHero()">
-		<img src="humanist-hero.jpg"></img>
-		<video muted src="humanist-hero.mp4"></video>
-		<h1>Vampire humaniste cherche suicidaire consentant * Ariane Louis-Seize</h1>
-	</div>
-	<div class="hero" id="yiyi" onclick="closeHero()">
-		<img src="yiyi-hero.jpg"></img>
-		<video muted src="yiyi-hero.mp4"></video>
-		<h1>Yi Yi 一一 * Edward Yang</h1>
-	</div>
-	<div class="hero" id="angels" onclick="closeHero()">
-		<img src="angels-hero.jpg"></img>
-		<video muted src="angels-hero.mp4"></video>
-		<h1>Yi Yi 一一 ^ Fallen Angels 墮落天使  * Wong Kar-wai</h1>
-	</div>
-	<div class="hero" id="scott" onclick="closeHero()">
-		<img src="scott-hero.jpg"></img>
-		<video muted src="scott-hero.mp4"></video>
-		<h1>Scott Pilgrim vs. the World * Edgar Wright</h1>
-	</div>
-
-	<div class="hero" id="mitty" onclick="closeHero()">
-		<img src="mitty-hero.jpg"></img>
-		<video muted src="mitty-hero.mp4"></video>
-		<h1>The Secret Life of Walter Mitty * Ben Stiller</h1>
-	</div>
-
-	<div class="hero" id="cyborg" onclick="closeHero()">
-		<img src="cyborg-hero.jpg"></img>
-		<video muted src="cyborg-hero.mp4"></video>
-		<h1>I’m a Cyborg, But That’s OK 2006 싸이보그지만 괜찮아 * Park Chan-wook
-</h1>
-	</div>
-
-	<!--<div id="asdf">hi</div>-->
 
 <script>
+	let moviesData = null;
+
+	// Load movie data from external JSON
+	async function loadMovies() {
+		try {
+			const response = await fetch('movies.json');
+			moviesData = await response.json();
+			generateMovieGrid();
+			generateHeroSections();
+		} catch (error) {
+			console.error('Error loading movies:', error);
+		}
+	}
+
+	// Generate the movie grid
+	function generateMovieGrid() {
+		const grid = document.getElementById('movieGrid');
+		grid.innerHTML = '';
+
+		moviesData.movies.forEach(movie => {
+			const button = document.createElement('button');
+			button.className = 'poster';
+			button.onclick = () => openHero(movie.id);
+			
+			button.innerHTML = `
+				<img src="${movie.id}-poster.jpg" alt="${movie.title}"/>
+				<video muted autoplay loop src="${movie.id}-poster.mp4"></video>
+			`;
+			
+			grid.appendChild(button);
+		});
+	}
+
+	// Generate hero sections
+	function generateHeroSections() {
+		const container = document.getElementById('heroContainer');
+		container.innerHTML = '';
+
+		moviesData.movies.forEach(movie => {
+			const heroDiv = document.createElement('div');
+			heroDiv.className = 'hero';
+			heroDiv.id = movie.id;
+			heroDiv.onclick = closeHero;
+			
+			if (movie.hasFont) {
+				heroDiv.style.fontFamily = `${movie.id}, 'Graphik', Arial, sans-serif`;
+			}
+			
+			heroDiv.innerHTML = `
+				<img src="${movie.id}-hero.jpg" alt="${movie.title}"/>
+				<video muted src="${movie.id}-hero.mp4"></video>
+				<h1>${movie.title} * ${movie.director}</h1>
+			`;
+			
+			container.appendChild(heroDiv);
+		});
+	}
 
 	function splitLetters(h1) {
 		const text = h1.textContent;
@@ -230,31 +239,27 @@
 			span.textContent = char;
 			h1.appendChild(span);
 		}
-
 	}
 
 	function showLettersRandomly(h1) {
-    const letters = h1.querySelectorAll('.letter');
-    const indices = [...Array(letters.length).keys()];
-    
-    // Shuffle array
-    for (let i = indices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    
-    // Show letters randomly
-    indices.forEach((index, i) => {
-        setTimeout(() => {
-            letters[index].classList.add('show');
-        }, i * 42);
-    });
-
+		const letters = h1.querySelectorAll('.letter');
+		const indices = [...Array(letters.length).keys()];
+		
+		// Shuffle array
+		for (let i = indices.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[indices[i], indices[j]] = [indices[j], indices[i]];
+		}
+		
+		// Show letters randomly
+		indices.forEach((index, i) => {
+			setTimeout(() => {
+				letters[index].classList.add('show');
+			}, i * 42);
+		});
 	}
 
-
 	function openHero(heroId) {
-
 		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
 
 		const hero = document.getElementById(heroId);
@@ -271,6 +276,8 @@
 		document.querySelectorAll('.hero video').forEach(video => video.pause());
 	}
 
+	// Initialize when page loads
+	window.addEventListener('DOMContentLoaded', loadMovies);
 
 </script>
 </body>
