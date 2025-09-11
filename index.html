@@ -154,6 +154,13 @@
 			display: block;
 		}
 		
+		.subtitle-line {
+			display: block;
+			margin-top: 0.2em;
+			font-size: 0.6em;
+			opacity: 0.9;
+		}
+		
 		.director-line {
 			display: block;
 			margin-top: 0.5em;
@@ -229,17 +236,23 @@
 				heroDiv.style.fontFamily = `${movie.id}, 'Graphik', Arial, sans-serif`;
 			}
 			
-			// Build title and director with colors
+			// Build title, subtitle, and director with colors
 			const titleColor = movie.titleColor || '#fff';
 			const directorColor = movie.directorColor || '#000';
+			
+			let titleHTML = `<span class="title-line" style="color: ${titleColor}">${movie.title}</span>`;
+			
+			// Add subtitle if it exists
+			if (movie.subtitle) {
+				titleHTML += `<span class="subtitle-line" style="color: ${titleColor}">${movie.subtitle}</span>`;
+			}
+			
+			titleHTML += `<span class="director-line" style="color: ${directorColor}">${movie.director}</span>`;
 			
 			heroDiv.innerHTML = `
 				<img src="${movie.id}-hero.jpg" alt="${movie.title}"/>
 				<video muted src="${movie.id}-hero.mp4"></video>
-				<h1>
-					<span class="title-line" style="color: ${titleColor}">${movie.title}</span>
-					<span class="director-line" style="color: ${directorColor}">${movie.director}</span>
-				</h1>
+				<h1>${titleHTML}</h1>
 			`;
 			
 			container.appendChild(heroDiv);
@@ -247,7 +260,7 @@
 	}
 
 	function splitLetters(h1) {
-		const spans = h1.querySelectorAll('.title-line, .director-line');
+		const spans = h1.querySelectorAll('.title-line, .subtitle-line, .director-line');
 		spans.forEach(span => {
 			const text = span.textContent;
 			const color = span.style.color;
