@@ -149,6 +149,15 @@
 			transition: opacity 0.3s ease;
 		}
 		.letter.show {opacity: 1}
+
+		.title-line {
+			display: block;
+		}
+		
+		.director-line {
+			display: block;
+			margin-top: 0.5em;
+		}
 	</style>
 </head>
 <body>
@@ -220,10 +229,17 @@
 				heroDiv.style.fontFamily = `${movie.id}, 'Graphik', Arial, sans-serif`;
 			}
 			
+			// Build title and director with colors
+			const titleColor = movie.titleColor || '#fff';
+			const directorColor = movie.directorColor || '#000';
+			
 			heroDiv.innerHTML = `
 				<img src="${movie.id}-hero.jpg" alt="${movie.title}"/>
 				<video muted src="${movie.id}-hero.mp4"></video>
-				<h1>${movie.title} * ${movie.director}</h1>
+				<h1>
+					<span class="title-line" style="color: ${titleColor}">${movie.title}</span>
+					<span class="director-line" style="color: ${directorColor}">${movie.director}</span>
+				</h1>
 			`;
 			
 			container.appendChild(heroDiv);
@@ -231,14 +247,19 @@
 	}
 
 	function splitLetters(h1) {
-		const text = h1.textContent;
-		h1.innerHTML = '';
-		for (let char of text) {
-			const span = document.createElement('span');
-			span.className = 'letter';
-			span.textContent = char;
-			h1.appendChild(span);
-		}
+		const spans = h1.querySelectorAll('.title-line, .director-line');
+		spans.forEach(span => {
+			const text = span.textContent;
+			const color = span.style.color;
+			span.innerHTML = '';
+			for (let char of text) {
+				const letterSpan = document.createElement('span');
+				letterSpan.className = 'letter';
+				letterSpan.textContent = char;
+				letterSpan.style.color = color;
+				span.appendChild(letterSpan);
+			}
+		});
 	}
 
 	function showLettersRandomly(h1) {
