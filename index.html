@@ -74,13 +74,13 @@
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 			gap: 1.5rem;
-			max-width: 1400px;
+			max-width: 2400px;
 			margin: 0 auto;
-			padding: 2rem 0;
+			padding: 1rem 0;
 		}
 
 		/* Portrait/Square: 2 columns when taller than 1:1 */
-		@media (max-aspect-ratio: 1/1) {
+		@media (max-aspect-ratio: 1/1.3) {
 			.grid {
 				grid-template-columns: repeat(2, 1fr);
 			}
@@ -164,6 +164,68 @@
 			display: block;
 			margin-top: 0.5em;
 		}
+		
+		.year-line {
+			display: block;
+			margin-top: 0.2em;
+			font-size: 0.7em;
+			opacity: 0.8;
+		}
+		
+		.scores-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-top: 1rem;
+			justify-content: center;
+		}
+		
+		.score-pill {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 1rem;
+			padding: 0.3rem 0.8rem;
+			font-size: 0.5em;
+			position: relative;
+			overflow: hidden;
+			min-width: 4rem;
+			text-align: center;
+		}
+		
+		.score-fill {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 1rem;
+			transition: width 0.6s ease;
+		}
+		
+		.score-text {
+			position: relative;
+			z-index: 1;
+			font-weight: bold;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+		}
+		
+		.poster-score {
+			position: absolute;
+			bottom: 0.5rem;
+			right: 0.5rem;
+			width: 2.5rem;
+			height: 2.5rem;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.7rem;
+			font-weight: bold;
+			transform: rotate(-45deg);
+			z-index: 10;
+		}
 	</style>
 </head>
 <body>
@@ -188,6 +250,7 @@
 
 <script>
 	let moviesData = null;
+	let videoCounters = {};
 
 	// Load movie data from external JSON
 	async function loadMovies() {
@@ -211,9 +274,17 @@
 			button.className = 'poster';
 			button.onclick = () => openHero(movie.id);
 			
+			// Calculate total score
+			let totalScore = 0;
+			if (movie.scores) {
+				const scoreValues = Object.values(movie.scores);
+				totalScore = scoreValues.reduce((sum, score) => sum + (score || 0), 0) * 4;
+			}
+			
 			button.innerHTML = `
 				<img src="${movie.id}-poster.jpg" alt="${movie.title}"/>
 				<video muted autoplay loop src="${movie.id}-poster.mp4"></video>
+				${totalScore > 0 ? `<div class="poster-score">${totalScore}</div>` : ''}
 			`;
 			
 			grid.appendChild(button);
@@ -235,9 +306,9 @@
 				heroDiv.style.fontFamily = `${movie.id}, 'Graphik', Arial, sans-serif`;
 			}
 			
-			// Build title, subtitle, and director with colors
+			// Build title, subtitle, director, year, and scores
 			const titleColor = movie.titleColor || '#fff';
-			const directorColor = movie.directorColor || '#000';
+			const altColor = movie.directorColor || '#000';
 			
 			let titleHTML = `<span class="title-line" style="color: ${titleColor}">${movie.title}</span>`;
 			
@@ -246,10 +317,30 @@
 				titleHTML += `<span class="subtitle-line" style="color: ${titleColor}">${movie.subtitle}</span>`;
 			}
 			
-			titleHTML += `<span class="director-line" style="color: ${directorColor}">${movie.director}</span>`;
+			titleHTML += `<span class="director-line" style="color: ${altColor}">${movie.director}</span>`;
+			titleHTML += `<span class="year-line" style="color: ${altColor}">${movie.year}</span>`;
+			
+			// Add score pills if scores exist
+			if (movie.scores) {
+				const scoreNames = ['visuals', 'sound', 'story', 'impact', 'purpose'];
+				const scoreLabels = ['visuals', 'sound', 'story', 'impact', 'purpose'];
+				
+				titleHTML += `<div class="scores-container">`;
+				scoreNames.forEach((scoreName, index) => {
+					const score = movie.scores[scoreName];
+					const fillWidth = score ? (score / 5) * 100 : 0;
+					titleHTML += `
+						<div class="score-pill">
+							<div class="score-fill" style="width: ${fillWidth}%"></div>
+							<div class="score-text">${scoreLabels[index]}</div>
+						</div>
+					`;
+				});
+				titleHTML += `</div>`;
+			}
 			
 			heroDiv.innerHTML = `
-				<img src="${movie.id}-hero.jpg" alt="${movie.title}"/>
+				<img src="${movie.id}-hero.jpg" alt="${movie.title}" onerror="this.src='fallback-hero.jpg'"/>
 				<video muted></video>
 				<h1>${titleHTML}</h1>
 			`;
@@ -259,7 +350,7 @@
 	}
 
 	function splitLetters(h1) {
-		const spans = h1.querySelectorAll('.title-line, .subtitle-line, .director-line');
+		const spans = h1.querySelectorAll('.title-line, .subtitle-line, .director-line, .year-line');
 		spans.forEach(span => {
 			const text = span.textContent;
 			const color = span.style.color;
@@ -301,10 +392,11 @@
 		const video = hero.querySelector('video');
 		const movie = moviesData.movies.find(m => m.id === heroId);
 		
-		// Pick random video variant
+		// Pick next video in sequence
 		const variants = movie.videoVariants || 1;
-		const randomVariant = Math.floor(Math.random() * variants) + 1;
-		const videoSrc = `${heroId}-hero-${randomVariant}.mp4`;
+		if (!videoCounters[heroId]) videoCounters[heroId] = 0;
+		videoCounters[heroId] = (videoCounters[heroId] % variants) + 1;
+		const videoSrc = `${heroId}-hero-${videoCounters[heroId]}.mp4`;
 		
 		video.src = videoSrc;
 		video.currentTime = 0;  // Reset to start

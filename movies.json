@@ -4,78 +4,511 @@
 			"id": "everything",
 			"title": "Everything Everywhere All At Once",
 			"director": "The Daniels",
+			"year": 2022,
 			"hasFont": true,
 			"titleColor": "#FFFFFF",
-			"directorColor": "#000000"
+			"directorColor": "#000000",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
 		},
 		{
 			"id": "amelie", 
 			"title": "The Fabulous Destiny of Amelie Poulain",
 			"subtitle": "Le Fabuleux Destin d'Amélie Poulain",
 			"director": "Jean-Pierre Jeunet",
+			"year": 2001,
 			"hasFont": true,
 			"titleColor": "#FECE08",
-			"directorColor": "#FFFFFF"
+			"directorColor": "#FFFFFF",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
 		},
 		{
 			"id": "love",
 			"title": "Love Exposure", 
-			"director": "Sion Sono"
+			"director": "Sion Sono",
+			"year": 2008,
+			"scores": {
+				"visuals": 3,
+				"sound": 3,
+				"story": 5,
+				"impact": 5,
+				"purpose": 2
+			}
 		},
 		{
 			"id": "lily",
 			"title": "All About Lily Chou-Chou",
 			"subtitle": "リリイ・シュシュのすべて",
 			"director": "Shunji Iwai",
+			"year": 2001,
 			"hasFont": true,
 			"titleColor": "#FFFFFF",
 			"directorColor": "#000000",
-			"videoVariants": 4
+			"videoVariants": 4,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
 		},
 		{
 			"id": "humanist",
 			"title": "Humanist Vampire Seeking Consenting Suicidal Person",
 			"subtitle": "Vampire humaniste cherche suicidaire consentant",
-			"director": "Ariane Louis-Seize", 
+			"director": "Ariane Louis-Seize",
+			"year": 2023,
 			"hasFont": true,
 			"titleColor": "#DC7A93",
-			"directorColor": "#FFFFFF"
+			"directorColor": "#FFFFFF",
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 4,
+				"impact": 4,
+				"purpose": 3
+			}
 		},
 		{
 			"id": "yiyi",
 			"title": "Yi Yi",
 			"subtitle": "一一",
 			"director": "Edward Yang",
-			"videoVariants": 2
+			"year": 2000,
+			"videoVariants": 2,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
 		},
 		{
 			"id": "angels",
 			"title": "Fallen Angels",
 			"subtitle": "墮落天使",
-			"director": "Wong Kar-wai"
+			"director": "Wong Kar-wai",
+			"year": 1995,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 3
+			}
 		},
 		{
 			"id": "scott",
 			"title": "Scott Pilgrim vs. the World", 
-			"director": "Edgar Wright"
+			"director": "Edgar Wright",
+			"year": 2010,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 4
+			}
 		},
 		{
 			"id": "mitty",
 			"title": "The Secret Life of Walter Mitty",
-			"director": "Ben Stiller"
+			"director": "Ben Stiller",
+			"year": 2013,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
 		},
 		{
 			"id": "cyborg",
 			"title": "I'm a Cyborg, But That's OK",
 			"subtitle": "싸이보그지만 괜찮아",
-			"director": "Park Chan-wook"
+			"director": "Park Chan-wook",
+			"year": 2006,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 4,
+				"impact": 5,
+				"purpose": 5
+			}
 		},
 		{
 			"id": "tron",
 			"title": "Tron: Legacy",
 			"director": "Joseph Kosinski",
+			"year": 2010,
 			"titleColor": "#0ff",
-			"directorColor": "#fff"
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 3,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "coraline",
+			"title": "Coraline",
+			"director": "Henry Selick",
+			"year": 2009,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "frank",
+			"title": "Frank",
+			"director": "Lenny Abrahamson",
+			"year": 2014,
+			"scores": {
+				"visuals": 4,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "closer",
+			"title": "Closer",
+			"director": "Mike Nichols",
+			"year": 2004,
+			"scores": {
+				"visuals": 4,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "burning",
+			"title": "Burning",
+			"subtitle": "버닝",
+			"director": "Lee Chang-dong",
+			"year": 2018,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "batman",
+			"title": "The Batman",
+			"director": "Matt Reeves",
+			"year": 2022,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "manchester",
+			"title": "Manchester by the Sea",
+			"director": "Kenneth Lonergan",
+			"year": 2016,
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "mishima",
+			"title": "Mishima: A Life in Four Chapters",
+			"subtitle": "ミシマ:ア・ライフ・イン・フォー・チャプターズ",
+			"director": "Paul Schrader",
+			"year": 1985,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 4,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "dune",
+			"title": "Dune",
+			"director": "Denis Villeneuve",
+			"year": 2021,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "spider",
+			"title": "Spider-Man: Into the Spider-Verse",
+			"director": "Peter Ramsey, Bob Persichetti, Rodney Rothman",
+			"year": 2018,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 4,
+				"purpose": 5
+			}
+		},
+		{
+			"id": "kickass",
+			"title": "Kick-Ass",
+			"director": "Matthew Vaughn",
+			"year": 2010,
+			"scores": {
+				"visuals": 3,
+				"sound": null,
+				"story": 4,
+				"impact": 4,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "mulholland",
+			"title": "Mulholland Drive",
+			"director": "David Lynch",
+			"year": 2001,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "stalker",
+			"title": "Stalker",
+			"subtitle": "Сталкер",
+			"director": "Andrei Tarkovsky",
+			"year": 1979,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 4,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "perks",
+			"title": "The Perks of Being a Wallflower",
+			"director": "Stephen Chbosky",
+			"year": 2012,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "mood",
+			"title": "In the Mood for Love",
+			"subtitle": "花樣年華",
+			"director": "Wong Kar-wai",
+			"year": 2000,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 3,
+				"impact": 4,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "sympathy",
+			"title": "Sympathy for Mr. Vengeance",
+			"subtitle": "복수는 나의 것",
+			"director": "Park Chan-wook",
+			"year": 2002,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 4,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "incredibles",
+			"title": "The Incredibles",
+			"director": "Brad Bird",
+			"year": 2004,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
+		},
+		{
+			"id": "reformed",
+			"title": "First Reformed",
+			"director": "Paul Schrader",
+			"year": 2017,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 4,
+				"impact": 4,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "knows",
+			"title": "Nobody Knows",
+			"subtitle": "誰も知らない",
+			"director": "Hirokazu Kore-eda",
+			"year": 2004,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "interrupted",
+			"title": "Girl, Interrupted",
+			"director": "James Mangold",
+			"year": 1999,
+			"scores": {
+				"visuals": null,
+				"sound": null,
+				"story": 5,
+				"impact": 4,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "walle",
+			"title": "WALL·E",
+			"director": "Andrew Stanton",
+			"year": 2008,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 5
+			}
+		},
+		{
+			"id": "hugo",
+			"title": "Hugo",
+			"director": "Martin Scorsese",
+			"year": 2011,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "fall",
+			"title": "The Fall",
+			"director": "Tarsem Singh",
+			"year": 2006,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 5,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "peaks",
+			"title": "Twin Peaks",
+			"director": "David Lynch",
+			"year": 1989,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "robot",
+			"title": "Mr. Robot",
+			"director": "Sam Esmail",
+			"year": 2015,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "atlas",
+			"title": "Cloud Atlas",
+			"director": "The Wachowskis, Tom Tykwer",
+			"year": 2012,
+			"scores": {
+				"visuals": 5,
+				"sound": null,
+				"story": 4,
+				"impact": 4,
+				"purpose": 4
+			}
+		},
+		{
+			"id": "suzhou",
+			"title": "Suzhou River",
+			"subtitle": "苏州河",
+			"director": "Lou Ye",
+			"year": 2000,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 5,
+				"impact": 5,
+				"purpose": 1
+			}
 		}
 	]
 }
