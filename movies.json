@@ -29,7 +29,8 @@
 			"director": "Shunji Iwai",
 			"hasFont": true,
 			"titleColor": "#FFFFFF",
-			"directorColor": "#000000"
+			"directorColor": "#000000",
+			"videoVariants": 4
 		},
 		{
 			"id": "humanist",
@@ -44,7 +45,8 @@
 			"id": "yiyi",
 			"title": "Yi Yi",
 			"subtitle": "一一",
-			"director": "Edward Yang"
+			"director": "Edward Yang",
+			"videoVariants": 2
 		},
 		{
 			"id": "angels",

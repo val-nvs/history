@@ -146,7 +146,6 @@
 
 		.letter {
 			opacity: 0;
-			transition: opacity 0.3s ease;
 		}
 		.letter.show {opacity: 1}
 
@@ -251,7 +250,7 @@
 			
 			heroDiv.innerHTML = `
 				<img src="${movie.id}-hero.jpg" alt="${movie.title}"/>
-				<video muted src="${movie.id}-hero.mp4"></video>
+				<video muted></video>
 				<h1>${titleHTML}</h1>
 			`;
 			
@@ -298,7 +297,18 @@
 
 		const hero = document.getElementById(heroId);
 		hero.classList.add('active');
-		hero.querySelector('video').play();
+		
+		const video = hero.querySelector('video');
+		const movie = moviesData.movies.find(m => m.id === heroId);
+		
+		// Pick random video variant
+		const variants = movie.videoVariants || 1;
+		const randomVariant = Math.floor(Math.random() * variants) + 1;
+		const videoSrc = `${heroId}-hero-${randomVariant}.mp4`;
+		
+		video.src = videoSrc;
+		video.currentTime = 0;  // Reset to start
+		video.play();
 
 		const h1 = hero.querySelector('h1');
 		splitLetters(h1);
@@ -307,7 +317,11 @@
 
 	function closeHero() {
 		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
-		document.querySelectorAll('.hero video').forEach(video => video.pause());
+		document.querySelectorAll('.hero video').forEach(video => {
+			video.pause();
+			video.currentTime = 0;  // Reset to start
+			video.src = '';  // Clear the source to fully stop
+		});
 	}
 
 	// Initialize when page loads
