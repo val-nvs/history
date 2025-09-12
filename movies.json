@@ -92,23 +92,6 @@
 			}
 		},
 		{
-			"id": "humanist",
-			"title": "Humanist Vampire Seeking Consenting Suicidal Person",
-			"subtitle": "Vampire humaniste cherche suicidaire consentant",
-			"director": "Ariane Louis-Seize",
-			"year": 2023,
-			"hasFont": true,
-			"titleColor": "#DC7A93",
-			"directorColor": "#FFFFFF",
-			"scores": {
-				"visuals": 4,
-				"sound": 4,
-				"story": 4,
-				"impact": 4,
-				"purpose": 3
-			}
-		},
-		{
 			"id": "yiyi",
 			"title": "Yi Yi",
 			"subtitle": "一一",
@@ -119,19 +102,6 @@
 				"visuals": 5,
 				"sound": 4,
 				"story": 5,
-				"impact": 5,
-				"purpose": 4
-			}
-		},
-		{
-			"id": "scott",
-			"title": "Scott Pilgrim vs. the World", 
-			"director": "Edgar Wright",
-			"year": 2010,
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 4,
 				"impact": 5,
 				"purpose": 4
 			}
@@ -179,6 +149,19 @@
 			}
 		},
 		{
+			"id": "scott",
+			"title": "Scott Pilgrim vs. the World", 
+			"director": "Edgar Wright",
+			"year": 2010,
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 4
+			}
+		},
+		{
 			"id": "frank",
 			"title": "Frank",
 			"director": "Lenny Abrahamson",
@@ -202,6 +185,23 @@
 				"sound": 5,
 				"story": 5,
 				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "humanist",
+			"title": "Humanist Vampire Seeking Consenting Suicidal Person",
+			"subtitle": "Vampire humaniste cherche suicidaire consentant",
+			"director": "Ariane Louis-Seize",
+			"year": 2023,
+			"hasFont": true,
+			"titleColor": "#DC7A93",
+			"directorColor": "#FFFFFF",
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 4,
+				"impact": 4,
 				"purpose": 3
 			}
 		},
