@@ -313,6 +313,19 @@
 			}
 		},
 		{
+			"id": "end",
+			"title": "The End of the F***ing World (2017)",
+			"director": "Jonathan Entwistle",
+			"year": 2017,
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
 			"id": "spider",
 			"title": "Spider-Man: Into the Spider-Verse",
 			"director": "Peter Ramsey, Bob Persichetti, Rodney Rothman",
@@ -512,45 +525,6 @@
 			}
 		},
 		{
-			"id": "end",
-			"title": "The End of the F***ing World (2017)",
-			"director": "Jonathan Entwistle",
-			"year": 2017,
-			"scores": {
-				"visuals": 0,
-				"sound": 0,
-				"story": 0,
-				"impact": 0,
-				"purpose": 0
-			}
-		},
-		{
-			"id": "skins",
-			"title": "Skins",
-			"director": "Bryan Elsley and Jamie Brittain",
-			"year": 2007,
-			"scores": {
-				"visuals": 0,
-				"sound": 0,
-				"story": 0,
-				"impact": 0,
-				"purpose": 0
-			}
-		},
-		{
-			"id": "carbon",
-			"title": "Altered Carbon",
-			"director": "Laeta Kalogridis",
-			"year": 2018,
-			"scores": {
-				"visuals": 0,
-				"sound": 0,
-				"story": 0,
-				"impact": 0,
-				"purpose": 0
-			}
-		},
-		{
 			"id": "atlas",
 			"title": "Cloud Atlas",
 			"director": "The Wachowskis, Tom Tykwer",
@@ -561,6 +535,32 @@
 				"story": 4,
 				"impact": 4,
 				"purpose": 4
+			}
+		},
+		{
+			"id": "skins",
+			"title": "Skins",
+			"director": "Bryan Elsley and Jamie Brittain",
+			"year": 2007,
+			"scores": {
+				"visuals": 2,
+				"sound": 2,
+				"story": 2,
+				"impact": 3,
+				"purpose": 2
+			}
+		},
+		{
+			"id": "carbon",
+			"title": "Altered Carbon",
+			"director": "Laeta Kalogridis",
+			"year": 2018,
+			"scores": {
+				"visuals": 3,
+				"sound": 3,
+				"story": 4,
+				"impact": 3,
+				"purpose": 3
 			}
 		}
 	]
