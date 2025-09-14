@@ -512,6 +512,45 @@
 			}
 		},
 		{
+			"id": "end",
+			"title": "The End of the F***ing World (2017)",
+			"director": "Jonathan Entwistle",
+			"year": 2017,
+			"scores": {
+				"visuals": 0,
+				"sound": 0,
+				"story": 0,
+				"impact": 0,
+				"purpose": 0
+			}
+		},
+		{
+			"id": "skins",
+			"title": "Skins",
+			"director": "Bryan Elsley and Jamie Brittain",
+			"year": 2007,
+			"scores": {
+				"visuals": 0,
+				"sound": 0,
+				"story": 0,
+				"impact": 0,
+				"purpose": 0
+			}
+		},
+		{
+			"id": "carbon",
+			"title": "Altered Carbon",
+			"director": "Laeta Kalogridis",
+			"year": 2018,
+			"scores": {
+				"visuals": 0,
+				"sound": 0,
+				"story": 0,
+				"impact": 0,
+				"purpose": 0
+			}
+		},
+		{
 			"id": "atlas",
 			"title": "Cloud Atlas",
 			"director": "The Wachowskis, Tom Tykwer",
