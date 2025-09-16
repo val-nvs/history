@@ -204,6 +204,21 @@
 			}
 		},
 		{
+			"id": "never",
+			"title": "You Were Never Really Here",
+			"director": "Lynne Ramsay",
+			"year": 2017,
+			"titleColor": "#fff",
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
 			"id": "batman",
 			"title": "The Batman",
 			"director": "Matt Reeves",
@@ -351,36 +366,6 @@
 			}
 		},
 		{
-			"id": "tron",
-			"title": "Tron: Legacy",
-			"director": "Joseph Kosinski",
-			"year": 2010,
-			"titleColor": "#0ff",
-			"directorColor": "#fff",
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 3,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
-			"id": "never",
-			"title": "You Were Never Really Here",
-			"director": "Lynne Ramsay",
-			"year": 2017,
-			"titleColor": "#fff",
-			"directorColor": "#fff",
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 4,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
 			"id": "melancholia",
 			"title": "Melancholia",
 			"director": "Lars von Trier",
@@ -458,6 +443,21 @@
 				"story": 5,
 				"impact": 5,
 				"purpose": 5
+			}
+		},
+		{
+			"id": "tron",
+			"title": "Tron: Legacy",
+			"director": "Joseph Kosinski",
+			"year": 2010,
+			"titleColor": "#0ff",
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 3,
+				"impact": 5,
+				"purpose": 3
 			}
 		},
 		{
