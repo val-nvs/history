@@ -121,21 +121,6 @@
 			}
 		},
 		{
-			"id": "tron",
-			"title": "Tron: Legacy",
-			"director": "Joseph Kosinski",
-			"year": 2010,
-			"titleColor": "#0ff",
-			"directorColor": "#fff",
-			"scores": {
-				"visuals": 5,
-				"sound": 5,
-				"story": 3,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
 			"id": "coraline",
 			"title": "Coraline",
 			"director": "Henry Selick",
@@ -206,6 +191,19 @@
 			}
 		},
 		{
+			"id": "manchester",
+			"title": "Manchester by the Sea",
+			"director": "Kenneth Lonergan",
+			"year": 2016,
+			"scores": {
+				"visuals": 4,
+				"sound": 4,
+				"story": 5,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
 			"id": "batman",
 			"title": "The Batman",
 			"director": "Matt Reeves",
@@ -250,19 +248,6 @@
 			"title": "Closer",
 			"director": "Mike Nichols",
 			"year": 2004,
-			"scores": {
-				"visuals": 4,
-				"sound": 4,
-				"story": 5,
-				"impact": 5,
-				"purpose": 3
-			}
-		},
-		{
-			"id": "manchester",
-			"title": "Manchester by the Sea",
-			"director": "Kenneth Lonergan",
-			"year": 2016,
 			"scores": {
 				"visuals": 4,
 				"sound": 4,
@@ -363,6 +348,51 @@
 				"story": 5,
 				"impact": 4,
 				"purpose": 3
+			}
+		},
+		{
+			"id": "tron",
+			"title": "Tron: Legacy",
+			"director": "Joseph Kosinski",
+			"year": 2010,
+			"titleColor": "#0ff",
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 3,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "never",
+			"title": "You Were Never Really Here",
+			"director": "Lynne Ramsay",
+			"year": 2017,
+			"titleColor": "#fff",
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 5,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 3
+			}
+		},
+		{
+			"id": "melancholia",
+			"title": "Melancholia",
+			"director": "Lars von Trier",
+			"year": 2011,
+			"titleColor": "#fff",
+			"directorColor": "#fff",
+			"scores": {
+				"visuals": 4,
+				"sound": 5,
+				"story": 4,
+				"impact": 5,
+				"purpose": 2
 			}
 		},
 		{
