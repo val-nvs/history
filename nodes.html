@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>favorites - node view</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		button {
+			all: unset;
+			cursor: pointer;
+		}
+		
+		body {
+			background: #14181C;
+			color: #fff;
+			font-family: 'Graphik', Arial, sans-serif;
+			overflow: hidden;
+		}
+		
+		header {
+			background: rgba(20, 24, 28, 0.95);
+			height: 60px;
+			width: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem 2rem;
+			letter-spacing: 0.1rem;
+			backdrop-filter: blur(10px);
+		}
+		
+		header nav ul {
+			color: #99AABB;
+			list-style: none;
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+		}
+		
+		.controls {
+			display: flex;
+			gap: 1rem;
+		}
+		
+		.controls button {
+			background-color: #2c3440;
+			padding: 0.4rem 1rem;
+			color: #99AABB;
+			border-radius: .3rem;
+			transition: all 0.2s;
+			font-size: 0.9rem;
+		}
+		
+		.controls button:hover {
+			background-color: #3c4450;
+			color: #fff;
+		}
+		
+		.controls button.active {
+			background-color: #00AC1C;
+			color: #fff;
+		}
+		
+		.controls button.danger {
+			background-color: #cc3333;
+			color: #fff;
+		}
+		
+		header nav ul button {
+			background-color: #00AC1C;
+			padding: 0.2rem 0.6rem;
+			color: #fff;
+			border-radius: .2rem;
+		}
+		
+		.hero.active ~ header,
+		body:has(.hero.active) header {
+			opacity: 0;
+			pointer-events: none;
+		}
+		
+		main {
+			background: #14181C url('grain-bg.png') repeat-x;
+			margin-top: 60px;
+			width: 100vw;
+			height: calc(100vh - 60px);
+			position: relative;
+			overflow: auto;
+		}
+		
+		.canvas-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 3000px;
+			height: 2000px;
+			min-width: 100%;
+			min-height: 100%;
+		}
+		
+		svg.connections {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 1;
+		}
+		
+		.connection-line {
+			stroke: #0080FF;
+			stroke-width: 2;
+			fill: none;
+		}
+		
+		.connection-line.highlight {
+			stroke: #00AC1C;
+			stroke-width: 3;
+		}
+
+		@font-face {font-family: 'Graphik'; src: url('Graphik-Bold-Trial.otf') format('truetype');}
+		@font-face {font-family: 'everything'; src: url('everything.woff2') format('woff2');}
+		@font-face {font-family: 'amelie'; src: url('amelie.otf') format('truetype');}
+		@font-face {font-family: 'lily'; src: url('lily.woff2') format('woff2');}
+		@font-face {font-family: 'humanist'; src: url('humanist.ttf') format('truetype');}
+		
+		.poster-node {
+			position: absolute;
+			width: 140px;
+			z-index: 10;
+			cursor: move;
+			transition: transform 0.2s, filter 0.2s;
+		}
+		
+		.poster-node.dragging {
+			z-index: 100;
+			cursor: grabbing;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+			transform: scale(1.05);
+		}
+		
+		.poster-node.connecting {
+			filter: brightness(1.3) drop-shadow(0 0 20px #00AC1C);
+		}
+		
+		.poster-node.selected {
+			filter: drop-shadow(0 0 15px #00AC1C);
+		}
+		
+		.poster {
+			background: rgba(0, 0, 0, .4);
+			border-radius: 0.5rem;
+			overflow: hidden;
+			display: block;
+			aspect-ratio: 2/3;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			position: relative;
+			width: 100%;
+		}
+		
+		.poster-node:hover .poster {
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+			border-color: rgba(255, 255, 255, 0.3);
+		}
+		
+		.poster video, .poster img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			pointer-events: none;
+		}
+		
+		.poster-score {
+			position: absolute;
+			bottom: 0.3rem;
+			right: 0.3rem;
+			width: 1.5rem;
+			height: 1.5rem;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.6rem;
+			font-weight: bold;
+			z-index: 10;
+			pointer-events: none;
+		}
+		
+		.node-label {
+			position: absolute;
+			bottom: -25px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 0.75rem;
+			color: rgba(255, 255, 255, 0.7);
+			white-space: nowrap;
+			pointer-events: none;
+			text-align: center;
+			max-width: 140px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		
+		/* Modal styles removed - not needed */
+		
+		/* Hero styles remain the same */
+		.hero video, .hero img, .hero h1 {
+			visibility: hidden;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100dvh;
+			object-fit: cover;
+			z-index: 3000;
+		}
+		
+		.hero h1 {
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			max-width: 90vw;
+			font-size: clamp(1.5rem, 8vw, 6rem);
+			white-space: normal;
+			word-wrap: break-word;
+			text-align: center;
+			padding: 0 1rem;
+			line-height: 1.2;
+		}
+		
+		.hero.active video, .hero.active img, .hero.active h1 {
+			visibility: visible;
+		}
+
+		#everything {font-family: everything, 'Graphik', Arial, sans-serif;}
+		#amelie {font-family: amelie, 'Graphik', Arial, sans-serif;}
+		#lily {font-family: lily, 'Graphik', Arial, sans-serif;}
+		#humanist {font-family: humanist, 'Graphik', Arial, sans-serif;}
+
+		.letter {
+			opacity: 0;
+		}
+		.letter.show {opacity: 1}
+
+		.title-line, .subtitle-line, .director-line, .year-line {
+			display: block;
+		}
+		
+		.subtitle-line {
+			margin-top: 0.2em;
+			font-size: 0.6em;
+			opacity: 0.9;
+		}
+		
+		.director-line {
+			margin-top: 0.5em;
+		}
+		
+		.year-line {
+			margin-top: 0.2em;
+			font-size: 0.7em;
+			opacity: 0.8;
+		}
+		
+		.scores-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-top: 1rem;
+			justify-content: center;
+		}
+		
+		.score-pill {
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid rgba(255, 255, 255, 1);
+			border-radius: 2rem;
+			padding: 0.4rem 2rem;
+			font-size: 0.14em;
+			position: relative;
+			overflow: hidden;
+			min-width: 3rem;
+			text-align: center;
+		}
+		
+		.score-fill {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			background: rgba(180, 180, 180, 1);
+			border-radius: 2rem;
+			transition: width 0.6s ease;
+		}
+		
+		.score-text {
+			position: relative;
+			z-index: 1;
+			font-weight: bold;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			mix-blend-mode: exclusion;
+		}
+		
+		.tooltip {
+			position: fixed;
+			background: rgba(0, 0, 0, 0.9);
+			color: #fff;
+			padding: 0.3rem 0.6rem;
+			border-radius: 0.3rem;
+			font-size: 0.8rem;
+			pointer-events: none;
+			z-index: 5000;
+			display: none;
+		}
+		
+		.tooltip.active {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li>MY</li>
+				<li>FAVORITE</li>
+				<li>FILMS</li>
+				<button onclick="window.location.href='https://letterboxd.com/eerom/'">PROFILE</button>
+			</ul>
+		</nav>
+		<div class="controls">
+			<button id="connectBtn" onclick="toggleConnectMode()">Connect</button>
+			<button onclick="autoArrange()">Auto Arrange</button>
+			<button onclick="downloadLayout()">Download Layout</button>
+			<button onclick="resetLayout()" class="danger">Reset</button>
+		</div>
+	</header>
+	<main>
+		<div class="canvas-container" id="canvas">
+			<svg class="connections" id="connections"></svg>
+			<!-- Movie nodes will be loaded here -->
+		</div>
+	</main>
+
+	<div id="heroContainer">
+		<!-- Hero sections will be loaded here -->
+	</div>
+	
+	<div class="tooltip" id="tooltip"></div>
+
+<script>
+	let moviesData = null;
+	let videoCounters = {};
+	let nodePositions = {};
+	let connections = [];
+	let connectMode = false;
+	let selectedNode = null;
+	let isDragging = false;
+	let dragNode = null;
+	let dragOffset = { x: 0, y: 0 };
+	
+	// Load from localStorage on startup
+	function loadSavedState() {
+		const saved = localStorage.getItem('movieNodeLayout');
+		if (saved) {
+			try {
+				const data = JSON.parse(saved);
+				nodePositions = data.positions || {};
+				connections = data.connections || [];
+			} catch (e) {
+				console.error('Error loading saved layout:', e);
+			}
+		}
+	}
+
+	// Save to localStorage
+	function saveToLocalStorage() {
+		const data = {
+			positions: nodePositions,
+			connections: connections
+		};
+		localStorage.setItem('movieNodeLayout', JSON.stringify(data));
+	}
+
+	// Load movie data from external JSON
+	async function loadMovies() {
+		try {
+			loadSavedState();
+			const response = await fetch('movies.json');
+			moviesData = await response.json();
+			generateMovieNodes();
+			generateHeroSections();
+			drawConnections();
+		} catch (error) {
+			console.error('Error loading movies.json:', error);
+			alert('Error loading movies.json file. Please ensure the file exists in the root directory.');
+		}
+	}
+
+	// Generate movie nodes
+	function generateMovieNodes() {
+		const canvas = document.getElementById('canvas');
+		const existingNodes = canvas.querySelectorAll('.poster-node');
+		existingNodes.forEach(node => node.remove());
+
+		moviesData.movies.forEach((movie, index) => {
+			const node = document.createElement('div');
+			node.className = 'poster-node';
+			node.id = `node-${movie.id}`;
+			node.dataset.movieId = movie.id;
+			
+			// Position: use saved position or create default grid
+			let position;
+			if (nodePositions[movie.id]) {
+				position = nodePositions[movie.id];
+			} else {
+				const cols = 6;
+				const spacing = 200;
+				position = {
+					x: 50 + (index % cols) * spacing,
+					y: 50 + Math.floor(index / cols) * spacing
+				};
+				nodePositions[movie.id] = position;
+			}
+			
+			node.style.left = position.x + 'px';
+			node.style.top = position.y + 'px';
+			
+			// Calculate total score
+			let totalScore = 0;
+			if (movie.scores) {
+				const scoreValues = Object.values(movie.scores);
+				totalScore = scoreValues.reduce((sum, score) => sum + (score || 0), 0) * 4;
+			}
+			
+			node.innerHTML = `
+				<div class="poster">
+					<img src="${movie.id}-poster.jpg" alt="${movie.title}" onerror="this.src='fallback-poster.jpg'"/>
+					<video muted autoplay loop src="${movie.id}-poster.mp4" onerror="this.style.display='none'"></video>
+					${totalScore > 0 ? `<div class="poster-score">${totalScore}</div>` : ''}
+				</div>
+				<div class="node-label">${movie.title}</div>
+			`;
+			
+			// Add event listeners
+			node.addEventListener('mousedown', handleMouseDown);
+			node.addEventListener('dblclick', () => openHero(movie.id));
+			
+			canvas.appendChild(node);
+		});
+		
+		// Add global mouse events
+		document.addEventListener('mousemove', handleMouseMove);
+		document.addEventListener('mouseup', handleMouseUp);
+	}
+
+	// Dragging functionality
+	function handleMouseDown(e) {
+		if (e.target.closest('.poster-score')) return;
+		e.preventDefault();
+		
+		const node = e.currentTarget;
+		
+		if (connectMode) {
+			// Connection mode
+			if (!selectedNode) {
+				selectedNode = node;
+				node.classList.add('selected');
+			} else if (selectedNode !== node) {
+				// Create connection
+				const id1 = selectedNode.dataset.movieId;
+				const id2 = node.dataset.movieId;
+				
+				// Check if connection already exists
+				const exists = connections.some(c => 
+					(c[0] === id1 && c[1] === id2) || 
+					(c[0] === id2 && c[1] === id1)
+				);
+				
+				if (!exists) {
+					connections.push([id1, id2]);
+					drawConnections();
+					saveToLocalStorage();
+				} else {
+					// Remove connection if it exists
+					connections = connections.filter(c => 
+						!(c[0] === id1 && c[1] === id2) && 
+						!(c[0] === id2 && c[1] === id1)
+					);
+					drawConnections();
+					saveToLocalStorage();
+				}
+				
+				selectedNode.classList.remove('selected');
+				selectedNode = null;
+			} else {
+				selectedNode.classList.remove('selected');
+				selectedNode = null;
+			}
+		} else {
+			// Drag mode
+			isDragging = true;
+			dragNode = node;
+			dragNode.classList.add('dragging');
+			
+			const rect = node.getBoundingClientRect();
+			const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+			dragOffset.x = e.clientX - rect.left;
+			dragOffset.y = e.clientY - rect.top;
+		}
+	}
+
+	function handleMouseMove(e) {
+		if (isDragging && dragNode) {
+			const canvas = document.getElementById('canvas');
+			const canvasRect = canvas.getBoundingClientRect();
+			
+			const x = e.clientX - canvasRect.left - dragOffset.x + canvas.scrollLeft;
+			const y = e.clientY - canvasRect.top - dragOffset.y + canvas.scrollTop;
+			
+			dragNode.style.left = x + 'px';
+			dragNode.style.top = y + 'px';
+			
+			// Update stored position
+			nodePositions[dragNode.dataset.movieId] = { x, y };
+			
+			// Redraw connections
+			drawConnections();
+		}
+	}
+
+	function handleMouseUp() {
+		if (isDragging) {
+			isDragging = false;
+			if (dragNode) {
+				dragNode.classList.remove('dragging');
+				dragNode = null;
+				saveToLocalStorage();
+			}
+		}
+	}
+
+	// Draw connections between nodes
+	function drawConnections() {
+		const svg = document.getElementById('connections');
+		svg.innerHTML = '';
+		
+		connections.forEach(([id1, id2]) => {
+			const node1 = document.getElementById(`node-${id1}`);
+			const node2 = document.getElementById(`node-${id2}`);
+			
+			if (node1 && node2) {
+				const pos1 = {
+					x: parseInt(node1.style.left) + 70,
+					y: parseInt(node1.style.top) + 105
+				};
+				const pos2 = {
+					x: parseInt(node2.style.left) + 70,
+					y: parseInt(node2.style.top) + 105
+				};
+				
+				const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				line.setAttribute('x1', pos1.x);
+				line.setAttribute('y1', pos1.y);
+				line.setAttribute('x2', pos2.x);
+				line.setAttribute('y2', pos2.y);
+				line.setAttribute('class', 'connection-line');
+				
+				svg.appendChild(line);
+			}
+		});
+	}
+
+	// Toggle connection mode
+	function toggleConnectMode() {
+		connectMode = !connectMode;
+		const btn = document.getElementById('connectBtn');
+		
+		if (connectMode) {
+			btn.classList.add('active');
+			btn.textContent = 'Cancel Connect';
+			document.querySelectorAll('.poster-node').forEach(node => {
+				node.classList.add('connecting');
+			});
+		} else {
+			btn.classList.remove('active');
+			btn.textContent = 'Connect';
+			document.querySelectorAll('.poster-node').forEach(node => {
+				node.classList.remove('connecting', 'selected');
+			});
+			selectedNode = null;
+		}
+	}
+
+	// Auto arrange nodes in a circle or grid
+	function autoArrange() {
+		const nodes = document.querySelectorAll('.poster-node');
+		const centerX = 800;
+		const centerY = 600;
+		const radius = 400;
+		
+		nodes.forEach((node, index) => {
+			const angle = (index / nodes.length) * Math.PI * 2;
+			const x = centerX + Math.cos(angle) * radius - 70;
+			const y = centerY + Math.sin(angle) * radius - 105;
+			
+			node.style.left = x + 'px';
+			node.style.top = y + 'px';
+			nodePositions[node.dataset.movieId] = { x, y };
+		});
+		
+		drawConnections();
+		saveToLocalStorage();
+	}
+
+	// Download layout as JSON file
+	function downloadLayout() {
+		const data = {
+			positions: nodePositions,
+			connections: connections,
+			timestamp: new Date().toISOString(),
+			version: "1.0"
+		};
+		
+		const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `movie-layout-${new Date().toISOString().split('T')[0]}.json`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+		
+		showTooltip('Layout downloaded!', 2000);
+	}
+
+	// Reset layout
+	function resetLayout() {
+		if (confirm('Reset all positions and connections? This cannot be undone.')) {
+			nodePositions = {};
+			connections = [];
+			localStorage.removeItem('movieNodeLayout');
+			generateMovieNodes();
+			drawConnections();
+		}
+	}
+
+	// Tooltip
+	function showTooltip(text, duration) {
+		const tooltip = document.getElementById('tooltip');
+		tooltip.textContent = text;
+		tooltip.classList.add('active');
+		tooltip.style.left = '50%';
+		tooltip.style.top = '100px';
+		tooltip.style.transform = 'translateX(-50%)';
+		
+		setTimeout(() => {
+			tooltip.classList.remove('active');
+		}, duration);
+	}
+
+	// Hero section functions (remain the same)
+	function generateHeroSections() {
+		const container = document.getElementById('heroContainer');
+		container.innerHTML = '';
+
+		moviesData.movies.forEach(movie => {
+			const heroDiv = document.createElement('div');
+			heroDiv.className = 'hero';
+			heroDiv.id = movie.id;
+			heroDiv.onclick = closeHero;
+			
+			if (movie.hasFont) {
+				heroDiv.style.fontFamily = `${movie.id}, 'Graphik', Arial, sans-serif`;
+			}
+			
+			const titleColor = movie.titleColor || '#fff';
+			const altColor = movie.directorColor || '#b4b4b4';
+			
+			let titleHTML = `<span class="title-line" style="color: ${titleColor}">${movie.title}</span>`;
+			
+			if (movie.subtitle) {
+				titleHTML += `<span class="subtitle-line" style="color: ${titleColor}">${movie.subtitle}</span>`;
+			}
+			
+			titleHTML += `<span class="director-line" style="color: ${altColor}">${movie.director}</span>`;
+			titleHTML += `<span class="year-line" style="color: ${altColor}">${movie.year}</span>`;
+			
+			if (movie.scores) {
+				const scoreNames = ['visuals', 'sound', 'story', 'impact', 'purpose'];
+				const scoreLabels = ['visuals', 'sound', 'story', 'impact', 'purpose'];
+				
+				titleHTML += `<div class="scores-container">`;
+				scoreNames.forEach((scoreName, index) => {
+					const score = movie.scores[scoreName];
+					const fillWidth = score ? (score / 5) * 100 : 0;
+					titleHTML += `
+						<div class="score-pill">
+							<div class="score-fill" style="width: ${fillWidth}%"></div>
+							<div class="score-text">${scoreLabels[index]}</div>
+						</div>
+					`;
+				});
+				titleHTML += `</div>`;
+			}
+			
+			heroDiv.innerHTML = `
+				<img src="${movie.id}-hero.jpg" alt="${movie.title}" onerror="this.src='fallback-hero.jpg'"/>
+				<video muted></video>
+				<h1>${titleHTML}</h1>
+			`;
+			
+			container.appendChild(heroDiv);
+		});
+	}
+
+	function splitLetters(h1) {
+		const spans = h1.querySelectorAll('.title-line, .subtitle-line, .director-line, .year-line');
+		spans.forEach(span => {
+			const text = span.textContent;
+			const color = span.style.color;
+			span.innerHTML = '';
+			for (let char of text) {
+				const letterSpan = document.createElement('span');
+				letterSpan.className = 'letter';
+				letterSpan.textContent = char;
+				letterSpan.style.color = color;
+				span.appendChild(letterSpan);
+			}
+		});
+	}
+
+	function showLettersRandomly(h1) {
+		const letters = h1.querySelectorAll('.letter');
+		const indices = [...Array(letters.length).keys()];
+		
+		for (let i = indices.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[indices[i], indices[j]] = [indices[j], indices[i]];
+		}
+		
+		indices.forEach((index, i) => {
+			setTimeout(() => {
+				letters[index].classList.add('show');
+			}, i * 40);
+		});
+	}
+
+	function openHero(heroId) {
+		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
+
+		const hero = document.getElementById(heroId);
+		hero.classList.add('active');
+		
+		const video = hero.querySelector('video');
+		const movie = moviesData.movies.find(m => m.id === heroId);
+		
+		const variants = movie.videoVariants || 1;
+		if (!videoCounters[heroId]) videoCounters[heroId] = 0;
+		videoCounters[heroId] = (videoCounters[heroId] % variants) + 1;
+		const videoSrc = `${heroId}-hero-${videoCounters[heroId]}.mp4`;
+		
+		video.src = videoSrc;
+		video.currentTime = 0;
+		video.play();
+
+		const h1 = hero.querySelector('h1');
+		splitLetters(h1);
+		setTimeout(() => showLettersRandomly(h1), 50);
+	}
+
+	function closeHero() {
+		document.querySelectorAll('.hero').forEach(hero => hero.classList.remove('active'));
+		document.querySelectorAll('.hero video').forEach(video => {
+			video.pause();
+			video.currentTime = 0;
+			video.src = '';
+		});
+	}
+
+	// Initialize when page loads
+	window.addEventListener('DOMContentLoaded', loadMovies);
+
+	// Keyboard shortcuts
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') {
+			if (document.querySelector('.hero.active')) {
+				closeHero();
+			} else if (connectMode) {
+				toggleConnectMode();
+			}
+		}
+		
+		// Ctrl/Cmd + S to download
+		if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+			e.preventDefault();
+			downloadLayout();
+		}
+	});
+</script>
+</body>
+</html>
